@@ -1,0 +1,8 @@
+*.o
+*.crf
+*.d
+*.axf
+*.plg
+*.sct
+*.tra
+*.lnp

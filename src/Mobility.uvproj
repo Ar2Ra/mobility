@@ -432,9 +432,9 @@
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
-              <FileName>Abstract.txt</FileName>
+              <FileName>README.md</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Abstract.txt</FilePath>
+              <FilePath>..\README.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -866,9 +866,9 @@
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
-              <FileName>Abstract.txt</FileName>
+              <FileName>README.md</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Abstract.txt</FilePath>
+              <FilePath>..\README.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1300,9 +1300,9 @@
           <GroupName>Documentation</GroupName>
           <Files>
             <File>
-              <FileName>Abstract.txt</FileName>
+              <FileName>README.md</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Abstract.txt</FilePath>
+              <FilePath>..\README.md</FilePath>
             </File>
           </Files>
         </Group>
