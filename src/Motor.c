@@ -6,11 +6,14 @@
 //Match 0 - frequency PWM [4 kHz] 15e6 / 4e3 = 3750
 #define PWM_M0  3750
 
+unsigned int speed = 0;
+unsigned int is_running = 0;
+
 void pwm_init(void)
 {
     PINSEL0 |= (1 << 17) | (1 << 19);             //PWM4 & PWM6
 
-    PWMPR 	 = 0x00000000;                        //Load prescaler maximum
+    PWMPR = 0x00000000;                           //Load prescaler maximum
 
     PWMMR0 = PWM_M0;                              //Match 0 - frequency
 
@@ -41,6 +44,10 @@ int pwm_set(unsigned int nr, unsigned int percent)
             PWMMR4 = val;
             break;
         case 2:
+            PWMMR6 = val;
+            break;
+        case 3:
+            PWMMR4 = val;
             PWMMR6 = val;
             break;
         default:
@@ -105,4 +112,52 @@ int dir_set(unsigned int motor, unsigned int dir)
     }
 
     return 0;
+}
+
+void robot_fw(void)        //move forward
+{
+    dir_set(1, 1);
+    dir_set(2, 1);
+}
+
+void robot_bw(void)        //move backward
+{
+    dir_set(1, 2);
+    dir_set(2, 2);
+}
+
+void robot_left(void)      //turn left (on spot)
+{
+    dir_set(1, 2);
+    dir_set(2, 1);
+}
+
+void robot_right(void)     //turn right (on spot)
+{
+    dir_set(1, 1);
+    dir_set(2, 2);
+}
+
+void robot_brake(void)     //forced stop
+{
+    dir_set(1, 3);
+    dir_set(2, 3);
+}
+
+void robot_start(void)                     //engage motors with the last known speed
+{
+    pwm_set(3, speed);
+    is_running = 1;
+}
+
+void robot_stop(void)                      //disengage motors
+{
+    pwm_set(3, 0);
+    is_running = 0;
+}
+
+void robot_speed(unsigned int percent)     //set speed
+{
+    speed = percent;
+    if (is_running) robot_start();         //if robot is running update speed now
 }
