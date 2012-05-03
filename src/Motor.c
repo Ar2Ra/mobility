@@ -161,3 +161,13 @@ void robot_speed(unsigned int percent)     //set speed
     speed = percent;
     if (is_running) robot_start();         //if robot is running update speed now
 }
+
+unsigned int robot_running(void)
+{
+    return is_running;
+}
+
+unsigned int robot_get_speed(void)
+{
+    return speed;
+}
