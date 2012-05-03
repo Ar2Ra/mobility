@@ -1,4 +1,4 @@
-//pwm.c
+//Motor.c
 
 #include <LPC214x.H>
 #include "Motor.h"

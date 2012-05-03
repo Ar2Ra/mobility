@@ -426,6 +426,11 @@
               <FileType>1</FileType>
               <FilePath>.\Hall.c</FilePath>
             </File>
+            <File>
+              <FileName>Commands.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Commands.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -860,6 +865,11 @@
               <FileType>1</FileType>
               <FilePath>.\Hall.c</FilePath>
             </File>
+            <File>
+              <FileName>Commands.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Commands.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1293,6 +1303,11 @@
               <FileName>Hall.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hall.c</FilePath>
+            </File>
+            <File>
+              <FileName>Commands.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Commands.c</FilePath>
             </File>
           </Files>
         </Group>
