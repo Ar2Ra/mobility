@@ -7,19 +7,19 @@
 
 #pragma import(__use_no_semihosting_swi)
 
-extern int  sendchar(int ch);           /* Defined in Serial.c                */
+extern int  sendchar(int ch);             /* Defined in Serial.c                */
 
 struct __FILE 
 { 
-  int handle;                           /* Add whatever you need here         */ 
+    int handle;                           /* Add whatever you need here         */ 
 };
 
 int fputc(int ch, FILE *f) 
 {
-  return (sendchar(ch));                /* Retarget fputc to serial UART      */
+    return (sendchar(ch));                /* Retarget fputc to serial UART      */
 }
 
 void _sys_exit(int return_code) 
 { 
-  for (;;);                             /* Endless loop                       */
+    for (;;);                             /* Endless loop                       */
 }

@@ -1,11 +1,13 @@
 /******************************************************************************/
 /*
-    MINOS
-    PCLK   = 15MHz
-    CPUCLK = 60MHz
+    Mobility Platform Main File
+
+    Clock info:
+        CCLK = 60 MHz
+        PCLK = 15 MHz
 */
 /******************************************************************************/
-                  
+
 #include <LPC214x.H>                    /* LPC214x definitions                */
 #include <stdio.h>
 
@@ -25,9 +27,9 @@ int main(void)
 {
     unsigned int ch, i;
     unsigned int nr, percent;
-	unsigned int motor, dir;
+    unsigned int motor, dir;
 
-	dir_init();
+    dir_init();
 
     init_serial();
     pwm_init();
@@ -37,7 +39,7 @@ int main(void)
     led_set(0xAA);
            
     while (1) 
-    {							   
+    {
         ch = getkey();
         
         if (ch == 'p')  //PWM set duty cycle
@@ -75,25 +77,25 @@ int main(void)
                     printf("[Frequency] invalid input\n\r");
             }
         }
-		
-		if (ch == 'd')
-		{
-			ch = getkey();
-			motor = ch - '0';
-			ch = getkey();
-			dir = ch - '0';
 
-			if (dir_set(motor, dir))
-				printf("[DIR] invalid input");
-			else
-				printf("[DIR] motor: %d dir: %d\n\r", motor, dir);
-		}
+        if (ch == 'd')
+        {
+            ch = getkey();
+            motor = ch - '0';
+            ch = getkey();
+            dir = ch - '0';
 
-		if (ch == 'v')
-		{
-			printf(VERSION);
-			printf("\n\r");
-		}            
+            if (dir_set(motor, dir))
+                printf("[DIR] invalid input");
+            else
+                printf("[DIR] motor: %d dir: %d\n\r", motor, dir);
+        }
+
+        if (ch == 'v')
+        {
+            printf(VERSION);
+            printf("\n\r");
+        }
     }
 }
 
@@ -107,12 +109,12 @@ void delay(unsigned int cnt)
 
 void led_init(void)
 {
-	IO1DIR |= (0xFF << 16);
-	IO1CLR |= (0xFF << 16);
+    IO1DIR |= (0xFF << 16);
+    IO1CLR |= (0xFF << 16);
 }
 
 void led_set(unsigned char state)
 {
-	IO1CLR |= (0xFF << 16);
-	IO1SET |= (state << 16);
+    IO1CLR |= (0xFF << 16);
+    IO1SET |= (state << 16);
 }
