@@ -18,7 +18,7 @@ void capture_init(void)
 
     VICVectAddr4 = (unsigned) T1isr;    //Set the timer ISR vector address
     VICVectCntl4 = 0x00000020 | 5;      //Set channel for TIMER1
-    VICIntEnable = 0x00000020;          //Enable the interrupt TIMER1
+    VICIntEnable |= (1 << 5);           //Enable the interrupt TIMER1
 }
 
 unsigned int hall_get(int nr)

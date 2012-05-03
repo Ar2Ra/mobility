@@ -17,7 +17,7 @@ void pwm_init(void)
 
     PWMMR0 = PWM_M0;                              //Match 0 - frequency
 
-    //currently duty cycle 0%    
+    //currently duty cycle is 0%    
     PWMMR4 = 0;                                   //Duty cycle PWM4
     PWMMR6 = 0;                                   //Duty cycle PWM6
     PWMLER |= (1 << 0) | (1 << 4) | (1 << 6);     //Latch enable Match4 & Match6

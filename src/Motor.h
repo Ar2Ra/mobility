@@ -56,6 +56,7 @@ void robot_start(void);                     //engage motors with the last known 
                                             //default speed is 0 (no effect, set speed first)
 
 void robot_stop(void);                      //disengage motors
+                                            //pwm set to 0%
 
 void robot_speed(unsigned int percent);     //set speed
                                             //if robot is stopped this will take effect

@@ -25,9 +25,11 @@ void led_set(unsigned char state);
 
 int main(void)
 {
+    /*
     unsigned int ch, i;
     unsigned int nr, percent;
     unsigned int motor, dir;
+    */
 
     dir_init();
 
@@ -40,6 +42,7 @@ int main(void)
            
     while (1) 
     {
+        /*
         ch = getkey();
         
         if (ch == 'p')  //PWM set duty cycle
@@ -96,7 +99,9 @@ int main(void)
             printf(VERSION);
             printf("\n\r");
         }
+        */
     }
+    
 }
 
 void delay(unsigned int cnt) 
