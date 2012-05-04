@@ -1,5 +1,7 @@
 /*
     Hall sensor read data
+
+    Hall.h
 */
 
 #ifndef __HALL_H

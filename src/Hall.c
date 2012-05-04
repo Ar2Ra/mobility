@@ -1,3 +1,9 @@
+/*
+    Hall sensor read data
+
+    Hall.c
+*/
+
 #include <LPC214x.H>
 #include "Hall.h"
 

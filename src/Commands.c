@@ -8,7 +8,7 @@
 #include "Motor.h"
 #include "Hall.h"
 
-#define VERSION "Alpha-4"
+#define VERSION "Alpha-5"
 
 void simple_cmd(char ch)
 {

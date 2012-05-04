@@ -13,6 +13,7 @@ void simple_cmd(char ch);
 
 /*
     All debug commands start with '_' character
+    For now, UART only (printf function)
 */
 void debug_cmd(char *str);
 

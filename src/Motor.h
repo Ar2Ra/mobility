@@ -56,8 +56,6 @@ void robot_stop(void);                      //disengage motors
                                             //pwm set to 0%
 
 void robot_speed(unsigned int percent);     //set speed
-                                            //if robot is stopped this will take effect
-                                            //after "robot_start()" is called
 //==============================================================
 
 #endif  // __MOTOR_H
