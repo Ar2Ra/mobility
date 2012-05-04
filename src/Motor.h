@@ -1,6 +1,8 @@
 /*
     Motor Control
     Speed and Direction
+
+    Motor.h
 */
 
 #ifndef __MOTOR_H
@@ -44,26 +46,18 @@ int dir_set(unsigned int motor, unsigned int dir);
 //==============================================================
 
 //These 5 functions only set the direction and do not start the robot.
-//For that "robot_start()" must be called.
 void robot_fw(void);                        //set movement forward
 void robot_bw(void);                        //set movement backward
 void robot_left(void);                      //set turn left
 void robot_right(void);                     //set turn right
 void robot_brake(void);                     //activate forced stop (brake)
 //--------------------------------------------------------------
-
-void robot_start(void);                     //engage motors with the last known speed
-                                            //default speed is 0 (no effect, set speed first)
-
 void robot_stop(void);                      //disengage motors
                                             //pwm set to 0%
 
 void robot_speed(unsigned int percent);     //set speed
                                             //if robot is stopped this will take effect
                                             //after "robot_start()" is called
-
-unsigned int robot_running(void);           //is robot started?
-unsigned int robot_get_speed(void);         //what speed [pwm duty cycle]?
 //==============================================================
 
 #endif  // __MOTOR_H

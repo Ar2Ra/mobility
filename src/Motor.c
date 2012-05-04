@@ -1,13 +1,15 @@
-//Motor.c
+/*
+    Motor Control
+    Speed and Direction
+
+    Motor.c
+*/
 
 #include <LPC214x.H>
 #include "Motor.h"
 
 //Match 0 - frequency PWM [4 kHz] 15e6 / 4e3 = 3750
 #define PWM_M0  3750
-
-unsigned int speed = 0;
-unsigned int is_running = 0;
 
 void pwm_init(void)
 {
@@ -144,30 +146,12 @@ void robot_brake(void)     //forced stop
     dir_set(2, 3);
 }
 
-void robot_start(void)                     //engage motors with the last known speed
-{
-    pwm_set(3, speed);
-    is_running = 1;
-}
-
 void robot_stop(void)                      //disengage motors
 {
     pwm_set(3, 0);
-    is_running = 0;
 }
 
 void robot_speed(unsigned int percent)     //set speed
 {
-    speed = percent;
-    if (is_running) robot_start();         //if robot is running update speed now
-}
-
-unsigned int robot_running(void)
-{
-    return is_running;
-}
-
-unsigned int robot_get_speed(void)
-{
-    return speed;
+    pwm_set(3, percent);
 }

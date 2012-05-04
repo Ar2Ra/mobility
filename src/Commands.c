@@ -37,11 +37,7 @@ void simple_cmd(char ch)
     case 'q':
         robot_stop();       //duty cycle 0 both motors
         break;
-
-    case 'e':
-        robot_start();      //start
-        break;
-    
+   
     case '1':
         robot_speed(80);    //slow
         break;
