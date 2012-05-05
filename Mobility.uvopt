@@ -601,10 +601,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>40</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>73</TopLine>
-      <CurrentLine>114</CurrentLine>
+      <TopLine>1</TopLine>
+      <CurrentLine>1</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Hall.c</PathWithFileName>
       <FilenameWithoutPath>Hall.c</FilenameWithoutPath>
@@ -690,7 +690,7 @@
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\README.md</PathWithFileName>
+      <PathWithFileName>.\README.md</PathWithFileName>
       <FilenameWithoutPath>README.md</FilenameWithoutPath>
     </File>
   </Group>
