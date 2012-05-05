@@ -20,7 +20,7 @@ void T0isr (void)    __irq;
 #define NR_TASKS 2
 
 //modify period of every task
-const unsigned int period[NR_TASKS] =
+unsigned int period[NR_TASKS] =
 {
     200,
     400
@@ -41,6 +41,7 @@ int task_config(unsigned int nr, unsigned int state)
     if (nr < NR_TASKS)
     {
         enable[nr] = state;
+        if (enable[nr] == 0) counter[nr] = 0;
         return 0;
     }
 
