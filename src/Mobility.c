@@ -11,11 +11,11 @@
 #include <LPC214x.H>                    /* LPC214x definitions                */
 #include <stdio.h>
 
-#include "Serial.h"
+#include "Uart.h"
 #include "Motor.h"
 #include "Hall.h"
 #include "Energy.h"
-//#include ""
+#include "Tasks.h"
 
 //=============================================
 void delay(unsigned int cnt);
@@ -32,11 +32,11 @@ int main(void)
     */
     dir_init();
 
-    init_serial();
+    init_uart();
     pwm_init();
     capture_init();
     //adc_init();    
-
+    tasks_init();
     led_init();
     //=======================================    
 
@@ -49,6 +49,7 @@ int main(void)
     
 }
 
+//simple delay function [for testing only]
 void delay(unsigned int cnt) 
 {
     unsigned int i, j;

@@ -7,6 +7,13 @@
 #include <LPC214x.H>
 #include "Hall.h"
 
+/*
+    Resolution
+    1 - Hz
+    1000 - mHz
+*/
+#define RES 1
+
 unsigned int last_capture1 = 0, signal_freq1 = 0;
 unsigned int last_capture2 = 0, signal_freq2 = 0;
 
@@ -35,6 +42,14 @@ unsigned int hall_get(int nr)
     return 0;
 }
 
+void hall_update(int nr, unsigned int new_value)
+{
+    if (nr == 1) signal_freq1 = new_value;
+    if (nr == 2) signal_freq2 = new_value;
+    
+    return;
+}
+
 void hall_reset(int nr)
 {
     switch (nr)
@@ -51,28 +66,44 @@ void hall_reset(int nr)
     }
 }
 
+unsigned int compute_freq(unsigned int current, unsigned int last)
+{
+    unsigned int den;
+    den = current - last;
+
+    return (1000000 * RES / den);
+}
+
+unsigned int hall_now(int nr)
+{
+    if (nr == 1)
+        return compute_freq(T1TC, last_capture1);
+
+    if (nr == 2)
+        return compute_freq(T1TC, last_capture2);
+
+    return 0;
+}
+
 void T1isr(void)	__irq
 {
-    unsigned int value, den;
+    unsigned int value;
 
     if (T1IR & (1 << 4))                        //Capture channel 0
     {
-        value = T1CR0;
-        den = value - last_capture1;
+        value = T1CR0;       
     
-        signal_freq1 = 100000000 / den;
+        signal_freq1 = compute_freq(value, last_capture1);
         last_capture1 = value;
     
         T1IR |= (1 << 4);                       //Clear capture 0 interrupt
     }
 
-
     if (T1IR & (1 << 5))                        //Capture channel 1
     {
         value = T1CR1;
-        den = value - last_capture2;
 
-        signal_freq2 = 100000000 / den;
+        signal_freq2 = compute_freq(value, last_capture2);
         last_capture2 = value;
 
         T1IR |= (1 << 5);                       //Clear capture 1 interrupt

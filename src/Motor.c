@@ -146,7 +146,7 @@ void robot_brake(void)     //forced stop
     dir_set(2, 3);
 }
 
-void robot_stop(void)                      //disengage motors
+void robot_stop(void)                      //disengage motors, duty cycle 0%
 {
     pwm_set(3, 0);
 }

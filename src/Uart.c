@@ -1,9 +1,9 @@
 /******************************************************************************/
-/* Serial.c: Low Level Serial Routines                                        */
+/* Uart.c: Low Level Uart Routines                                            */
 /******************************************************************************/
 
 #include <LPC21xx.H>                    /* LPC21xx definitions                */
-#include "Serial.h"
+#include "Uart.h"
 #include "Commands.h"
 
 // <o> Use UART <0-1>
@@ -77,7 +77,7 @@ int flag_debug = 0;
 
 void UARTisr(void)	__irq;
 
-void init_serial (void)                               //Initialize Serial Interface
+void init_uart (void)                                 //Initialize Serial Interface
 {              
     PINSEL0 |= UxPINS;                                //Enable RxD and TxD pins
     UxLCR = 0x83;                                     //8 bits, no Parity, 1 Stop bit
