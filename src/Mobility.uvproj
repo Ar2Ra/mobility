@@ -401,10 +401,15 @@
               <FileType>1</FileType>
               <FilePath>.\Retarget.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Communcations</GroupName>
+          <Files>
             <File>
-              <FileName>Serial.c</FileName>
+              <FileName>Uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Serial.c</FilePath>
+              <FilePath>.\Uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -435,6 +440,21 @@
               <FileName>Energy.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Energy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Tasks</GroupName>
+          <Files>
+            <File>
+              <FileName>Task_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Task_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>Task_mech.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Task_mech.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -845,10 +865,15 @@
               <FileType>1</FileType>
               <FilePath>.\Retarget.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Communcations</GroupName>
+          <Files>
             <File>
-              <FileName>Serial.c</FileName>
+              <FileName>Uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Serial.c</FilePath>
+              <FilePath>.\Uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -879,6 +904,21 @@
               <FileName>Energy.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Energy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Tasks</GroupName>
+          <Files>
+            <File>
+              <FileName>Task_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Task_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>Task_mech.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Task_mech.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1289,10 +1329,15 @@
               <FileType>1</FileType>
               <FilePath>.\Retarget.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Communcations</GroupName>
+          <Files>
             <File>
-              <FileName>Serial.c</FileName>
+              <FileName>Uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Serial.c</FilePath>
+              <FilePath>.\Uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1323,6 +1368,21 @@
               <FileName>Energy.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Energy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Tasks</GroupName>
+          <Files>
+            <File>
+              <FileName>Task_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Task_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>Task_mech.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Task_mech.c</FilePath>
             </File>
           </Files>
         </Group>
