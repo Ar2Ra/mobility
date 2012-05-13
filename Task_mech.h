@@ -18,4 +18,11 @@ void task_init(void);
 */
 int task_config(unsigned int nr, unsigned int state);
 
+/*
+    Instead of using "task_config()" one can also use
+    these functions:
+*/
+int task_enable(unsigned int nr);
+int task_disable(unsigned int nr);
+
 #endif  // __TASK_MECH_H

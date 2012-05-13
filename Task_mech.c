@@ -13,35 +13,57 @@
 #define ISR_CYCLE 1000 //ISR @ every ISR_CYCLE useconds
 void T0isr (void)    __irq;
 
+typedef struct _task_struct
+{
+    unsigned int period;
+    void (*name)(void);
+    unsigned int enable;
+    volatile unsigned int counter;
+} task_struct;
+
 /*
     Tasks config
 */
 //====================================================
 #define NR_TASKS 2
 
-//modify period of every task
-unsigned int period[NR_TASKS] =
+task_struct task[NR_TASKS] = 
 {
-    200,
-    400
+    {200, my_task1, 0, 0},
+    {400, my_task2, 0, 0}
 };
 
-unsigned int enable[NR_TASKS];
-volatile unsigned int counter[NR_TASKS];
-
-void (*task_list[NR_TASKS])(void) =
-{
-    my_task1,
-    my_task2
-};
 //====================================================
 
 int task_config(unsigned int nr, unsigned int state)
 {
     if (nr < NR_TASKS)
     {
-        enable[nr] = state;
-        if (enable[nr] == 0) counter[nr] = 0;
+        task[nr].enable = state;
+        if (task[nr].enable == 0) task[nr].counter = 0;
+        return 0;
+    }
+
+    return -1;
+}
+
+int task_enable(unsigned int nr)
+{
+    if (nr < NR_TASKS)
+    {
+        task[nr].enable = 1;
+        return 0;
+    }
+
+    return -1;
+}
+
+int task_disable(unsigned int nr)
+{
+    if (nr < NR_TASKS)
+    {
+        task[nr].enable = 0;
+        task[nr].counter = 0;
         return 0;
     }
 
@@ -68,13 +90,13 @@ void T0isr (void)	__irq
     int i;
 
     for (i = 0; i < NR_TASKS; i++)
-        if (enable[i])
+        if (task[i].enable)
         {
-            counter[i]++;
-            if (counter[i] >= period[i])
+            task[i].counter++;
+            if (task[i].counter >= task[i].period)
             {
-                counter[i] = 0;
-                (*task_list[i])();
+                task[i].counter = 0;
+                (*task[i].name)();
             }
         }
 
