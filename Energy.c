@@ -5,6 +5,8 @@
 */
 
 #include <LPC214x.H>
+#include "Type.h"
+
 #include "Energy.h"
 
 #define SEL       0x02        //Select channel AD0.1
@@ -15,15 +17,15 @@
 
 typedef struct _adc_struct
 {
-    unsigned int buffer[NR_SAMPLES];
-    unsigned int counter;
+    uint32 buffer[NR_SAMPLES];
+    uint16 counter;
 } adc_struct;
 
 adc_struct adc_data[NR_CHANNELS];
 
-void sample_add(unsigned int ch, unsigned int sample)
+void sample_add(uint8 ch, uint32 sample)
 {
-    unsigned int pos;
+    uint16 pos;
     pos = adc_data[ch].counter;
 
     adc_data[ch].buffer[pos] = sample;
@@ -32,9 +34,10 @@ void sample_add(unsigned int ch, unsigned int sample)
     adc_data[ch].counter = pos;
 }
 
-unsigned int sample_avg(unsigned int ch)
+uint32 sample_avg(uint8 ch)
 {
-    unsigned int i, sum = 0;
+    uint16 i;
+    uint32 sum = 0;
 
     for (i = 0; i < NR_SAMPLES; i++)
         sum += adc_data[ch].buffer[i];
@@ -51,9 +54,3 @@ void adc_init(void)
     AD0CR |= (1 << 16);       //Burst enable
     AD0CR |= (1 << 21);       //AD0 is operational
 }
-
-/*
-unsigned int adc_get(void)
-{
-}
-*/

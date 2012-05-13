@@ -1,0 +1,8 @@
+Current Interrupt Priority
+
+UART        1
+Capture     4
+Taks        2
+
+SPI         0
+ADC

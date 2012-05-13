@@ -6,6 +6,8 @@
 */
 
 #include <LPC214x.H>
+#include "Type.h"
+
 #include "Motor.h"
 
 //Match 0 - frequency PWM [4 kHz] 15e6 / 4e3 = 3750
@@ -29,14 +31,14 @@ void pwm_init(void)
     PWMTCR = 0x00000002;                          //Reset counter and prescaler
     PWMTCR = 0x00000009;                          //PWM Enable & Counter Enable
 
-    PWMLER = 0;
+    PWMLER = 0;                                   //isis
 }
 
-int pwm_set(unsigned int nr, unsigned int percent)
+int32 pwm_set(uint8 nr, uint8 percent)
 {
-    static unsigned int val;
+    static uint32 val;
 
-    if (percent > 100) return 1;
+    if (percent > 100) return -1;
 
     val = PWM_M0 * ( (float) percent / 100.0 );
 
@@ -53,7 +55,7 @@ int pwm_set(unsigned int nr, unsigned int percent)
             PWMMR6 = val;
             break;
         default:
-            return 2;           
+            return -2;           
     }
 
     PWMLER |= (1 << 4) | (1 << 6);      //Latch enable Match4 & Match6
@@ -77,9 +79,9 @@ void dir_init(void)
     IO0CLR |= (1 << 12) | (1 << 13) | (1 << 14) | (1 << 15);
 }
 
-int dir_set(unsigned int motor, unsigned int dir)
+int32 dir_set(uint8 motor, uint8 dir)
 {
-    unsigned int in1, in2;
+    uint8 in1, in2;
 
     switch (motor)
     {
@@ -92,7 +94,7 @@ int dir_set(unsigned int motor, unsigned int dir)
             in2 = 15;
             break;
         default:
-            return 1;
+            return -1;
     }
 
     switch (dir)
@@ -110,7 +112,7 @@ int dir_set(unsigned int motor, unsigned int dir)
             IO0SET |= (1 << in2);
             break;
         default:
-            return 2;
+            return -2;
     }
 
     return 0;
@@ -146,12 +148,12 @@ void robot_brake(void)     //forced stop
     dir_set(2, 3);
 }
 
-void robot_stop(void)                      //disengage motors, duty cycle 0%
+void robot_stop(void)               //disengage motors, duty cycle 0%
 {
     pwm_set(3, 0);
 }
 
-void robot_speed(unsigned int percent)     //set speed
+void robot_speed(uint8 percent)     //set speed
 {
     pwm_set(3, percent);
 }

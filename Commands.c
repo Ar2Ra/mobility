@@ -3,6 +3,7 @@
 */
 
 #include <stdio.h>
+#include "Type.h"
 
 #include "Commands.h"
 #include "Motor.h"
@@ -10,7 +11,7 @@
 
 #define VERSION "Alpha-5"
 
-void simple_cmd(char ch)
+void simple_cmd(uint8 ch)
 {
     switch (ch)
     {
@@ -52,11 +53,11 @@ void simple_cmd(char ch)
     }
 }
 
-void debug_cmd(char *str)
+void debug_cmd(uint8 *str)
 {
-    unsigned int i;
-    unsigned int nr, percent;
-    unsigned int motor, dir;
+    uint8 i;
+    uint8 nr, percent;
+    uint8 motor, dir;
       
     if (str[0] == 'p')  //PWM set duty cycle
     {
@@ -68,8 +69,8 @@ void debug_cmd(char *str)
          percent = percent * 10 + str[i + 2] - '0';
        }
        
-       if (pwm_set(nr, percent))
-           printf("[PWM] invalid input\n\r");
+       if (pwm_set(nr, percent) < 0)
+           printf("[PWM] input err\n\r");
        else
            printf("[PWM] %d set %d\n\r", nr, percent);
     }
@@ -81,13 +82,13 @@ void debug_cmd(char *str)
         switch (nr)
         {
             case 1:
-                printf("[Hall] signal 1: %d\n\r", hall_get(1));
+                printf("[Hall] f1: %d\n\r", hall_get(1));
                 break;
             case 2:
-                printf("[Hall] signal 2: %d\n\r", hall_get(2));
+                printf("[Hall] f2: %d\n\r", hall_get(2));
                 break;
             default:
-                printf("[Hall] invalid input\n\r");
+                printf("[Hall] input err\n\r");
         }
     }
 
@@ -96,8 +97,8 @@ void debug_cmd(char *str)
         motor = str[1] - '0';
         dir = str[2] - '0';
 
-        if (dir_set(motor, dir))
-            printf("[DIR] invalid input");
+        if (dir_set(motor, dir) < 0)
+            printf("[DIR] input err\n\r");
         else
             printf("[DIR] motor: %d dir: %d\n\r", motor, dir);
     }

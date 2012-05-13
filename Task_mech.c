@@ -4,8 +4,9 @@
     Task mechanism
 */
 
-#include <stdio.h>
 #include <LPC214x.H>
+#include <stdio.h>
+#include "Type.h"
 
 #include "Task_mech.h"
 #include "Task_list.h"
@@ -15,10 +16,10 @@ void T0isr (void)    __irq;
 
 typedef struct _task_struct
 {
-    unsigned int period;
+    uint32 period;
     void (*name)(void);
-    unsigned int enable;
-    volatile unsigned int counter;
+    uint8 enable;
+    volatile uint32 counter;
 } task_struct;
 
 /*
@@ -29,12 +30,12 @@ typedef struct _task_struct
 
 task_struct task[NR_TASKS] = 
 {
-    {500, hall_timeout, 0, 0}
+    {100, hall_timeout, 0, 0}
 };
 
 //====================================================
 
-int task_config(unsigned int nr, unsigned int state)
+int32 task_config(uint8 nr, uint8 state)
 {
     if (nr < NR_TASKS)
     {
@@ -46,7 +47,7 @@ int task_config(unsigned int nr, unsigned int state)
     return -1;
 }
 
-int task_enable(unsigned int nr)
+int32 task_enable(uint8 nr)
 {
     if (nr < NR_TASKS)
     {
@@ -57,7 +58,7 @@ int task_enable(unsigned int nr)
     return -1;
 }
 
-int task_disable(unsigned int nr)
+int32 task_disable(uint8 nr)
 {
     if (nr < NR_TASKS)
     {
@@ -79,14 +80,14 @@ void task_init(void)
     
     T0TCR = 0x00000001;                  //Enable timer
 
-    VICVectAddr2 = (unsigned) T0isr;     //Set the timer ISR vector address
+    VICVectAddr2 = (uint32) T0isr;     //Set the timer ISR vector address
     VICVectCntl2 = 0x00000020 | 4;       //Set channel for TIMER0
     VICIntEnable |= 0x00000010;          //Enable the interrupt TIMER1
 }
 
 void T0isr (void)	__irq
 {
-    int i;
+    uint8 i;
 
     for (i = 0; i < NR_TASKS; i++)
         if (task[i].enable)

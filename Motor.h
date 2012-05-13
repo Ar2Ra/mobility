@@ -23,7 +23,7 @@ void pwm_init(void);
     pwm_set(3, 0);    (soft stop)
     pwm_set(3, 100);  (full speed)
 */
-int pwm_set(unsigned int nr, unsigned int percent);
+int32 pwm_set(uint8 nr, uint8 percent);
 
 /*
     Initialize the 4 output pins for motor direction
@@ -31,14 +31,14 @@ int pwm_set(unsigned int nr, unsigned int percent);
 void dir_init(void);
 
 /*
-    motor = 1,2
+    motor = 1, 2
 	
     dir
 	1 - forward
 	2 - backward
 	3 - brake
 */
-int dir_set(unsigned int motor, unsigned int dir);
+int32 dir_set(uint8 motor, uint8 dir);
 
 /*
     Robot basic movement functions [alpha]
@@ -55,7 +55,7 @@ void robot_brake(void);                     //activate forced stop (brake)
 void robot_stop(void);                      //disengage motors
                                             //pwm set to 0%
 
-void robot_speed(unsigned int percent);     //set speed
+void robot_speed(uint8 percent);            //set speed
 //==============================================================
 
 #endif  // __MOTOR_H

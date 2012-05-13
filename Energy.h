@@ -11,6 +11,5 @@
 #define __ENERGY_H
 
 void adc_init(void);
-//unsigned int adc_get(void);
 
 #endif  // __ENERGY_H

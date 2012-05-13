@@ -1,8 +1,13 @@
-/******************************************************************************/
-/* Uart.c: Low Level Uart Routines                                            */
-/******************************************************************************/
+/*
+    UART
+    Low level serial routines
 
-#include <LPC21xx.H>                    /* LPC21xx definitions                */
+    Uart.c
+*/
+
+#include <LPC21xx.H>
+#include "Type.h"
+
 #include "Uart.h"
 #include "Commands.h"
 
@@ -70,10 +75,10 @@
 
 #define BUF_SIZE 16
 
-char buffer[BUF_SIZE];
+uint8 buffer[BUF_SIZE];
 
-int pointer = 0;
-int flag_debug = 0;
+uint8 pointer = 0;
+uint8 flag_debug = 0;
 
 void UARTisr(void)	__irq;
 
@@ -86,29 +91,29 @@ void init_uart (void)                                 //Initialize Serial Interf
     UxLCR = 0x03;                                     //DLAB = 0
     UxIER |= (1 << 0);
 
-    VICVectAddr1 = (unsigned) UARTisr;                //Set the UART ISR vector address
+    VICVectAddr1 = (uint32) UARTisr;                  //Set the UART ISR vector address
     VICVectCntl1 = 0x00000020 | VIC_MASK;             //Set channel for UART
     VICIntEnable |= (1 << VIC_MASK);                  //Enable the interrupt UART
 }
 
 
 //Implementation of putchar (also used by printf() function to output data)
-int sendchar (int ch)  
-{                                                 //Write character to Serial Port
-  while (!(UxLSR & 0x20));
-  return (UxTHR = ch);
+uint8 sendchar (uint8 ch)  
+{                                                   //Write character to Serial Port
+    while (!(UxLSR & 0x20));
+    return (UxTHR = ch);
 }
 
-int getkey (void)                                 //Read character from Serial Port
+uint8 getkey (void)                                 //Read character from Serial Port
 {
-  while (!(UxLSR & 0x01));
-  return (UxRBR);
+    while (!(UxLSR & 0x01));
+    return (UxRBR);
 }
 
 void UARTisr(void)	__irq
 {
-    char ch;
-    unsigned int status = (UxIIR >> 1) & 0x00000007;
+    uint8 ch;
+    uint32 status = (UxIIR >> 1) & 0x00000007;
 
     if (status == 2)                              //Receive Data Available (RDA).
     {

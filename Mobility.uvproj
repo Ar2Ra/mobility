@@ -411,6 +411,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart.c</FilePath>
             </File>
+            <File>
+              <FileName>Spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -465,6 +470,11 @@
               <FileName>README.md</FileName>
               <FileType>5</FileType>
               <FilePath>.\README.md</FilePath>
+            </File>
+            <File>
+              <FileName>Int_Priority.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Int_Priority.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -875,6 +885,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart.c</FilePath>
             </File>
+            <File>
+              <FileName>Spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -929,6 +944,11 @@
               <FileName>README.md</FileName>
               <FileType>5</FileType>
               <FilePath>.\README.md</FilePath>
+            </File>
+            <File>
+              <FileName>Int_Priority.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Int_Priority.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1339,6 +1359,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart.c</FilePath>
             </File>
+            <File>
+              <FileName>Spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1393,6 +1418,11 @@
               <FileName>README.md</FileName>
               <FileType>5</FileType>
               <FilePath>.\README.md</FilePath>
+            </File>
+            <File>
+              <FileName>Int_Priority.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Int_Priority.txt</FilePath>
             </File>
           </Files>
         </Group>
