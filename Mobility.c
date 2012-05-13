@@ -40,8 +40,7 @@ int main(void)
     led_init();
     //=======================================    
 
-    task_config(0, 1);
-    task_config(1, 1);
+    task_enable(0);
 
     led_set(0x00);
     robot_fw();         //The default direction of the robot is forward

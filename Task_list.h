@@ -7,7 +7,6 @@
 #ifndef __TASK_LIST_H
 #define __TASK_LIST_H
 
-void my_task1(void);
-void my_task2(void);
+void hall_timeout(void);
 
 #endif  // __TASK_LIST_H

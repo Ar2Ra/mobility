@@ -25,12 +25,11 @@ typedef struct _task_struct
     Tasks config
 */
 //====================================================
-#define NR_TASKS 2
+#define NR_TASKS 1
 
 task_struct task[NR_TASKS] = 
 {
-    {200, my_task1, 0, 0},
-    {400, my_task2, 0, 0}
+    {500, hall_timeout, 0, 0}
 };
 
 //====================================================
