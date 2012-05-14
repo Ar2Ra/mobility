@@ -2,13 +2,13 @@
     Motor Control
     Speed and Direction
 
-    Motor.c
+    Pwm.c
 */
 
 #include <LPC214x.H>
 #include "Type.h"
 
-#include "Motor.h"
+#include "Pwm.h"
 
 //Match 0 - frequency PWM [4 kHz] 15e6 / 4e3 = 3750
 #define PWM_M0  3750

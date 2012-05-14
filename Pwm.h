@@ -2,11 +2,11 @@
     Motor Control
     Speed and Direction
 
-    Motor.h
+    Pwm.h
 */
 
-#ifndef __MOTOR_H
-#define __MOTOR_H
+#ifndef __PWM_H
+#define __PWM_H
 
 /*
     Initialize PWM module
@@ -58,4 +58,4 @@ void robot_stop(void);                      //disengage motors
 void robot_speed(uint8 percent);            //set speed
 //==============================================================
 
-#endif  // __MOTOR_H
+#endif  // __PWM_H

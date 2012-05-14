@@ -422,14 +422,14 @@
           <GroupName>Source Code</GroupName>
           <Files>
             <File>
-              <FileName>Mobility.c</FileName>
+              <FileName>Main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Mobility.c</FilePath>
+              <FilePath>.\Main.c</FilePath>
             </File>
             <File>
-              <FileName>Motor.c</FileName>
+              <FileName>Pwm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Motor.c</FilePath>
+              <FilePath>.\Pwm.c</FilePath>
             </File>
             <File>
               <FileName>Hall.c</FileName>
@@ -437,14 +437,14 @@
               <FilePath>.\Hall.c</FilePath>
             </File>
             <File>
-              <FileName>Commands.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Commands.c</FilePath>
-            </File>
-            <File>
               <FileName>Energy.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Energy.c</FilePath>
+            </File>
+            <File>
+              <FileName>Commands.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Commands.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -896,14 +896,14 @@
           <GroupName>Source Code</GroupName>
           <Files>
             <File>
-              <FileName>Mobility.c</FileName>
+              <FileName>Main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Mobility.c</FilePath>
+              <FilePath>.\Main.c</FilePath>
             </File>
             <File>
-              <FileName>Motor.c</FileName>
+              <FileName>Pwm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Motor.c</FilePath>
+              <FilePath>.\Pwm.c</FilePath>
             </File>
             <File>
               <FileName>Hall.c</FileName>
@@ -911,14 +911,14 @@
               <FilePath>.\Hall.c</FilePath>
             </File>
             <File>
-              <FileName>Commands.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Commands.c</FilePath>
-            </File>
-            <File>
               <FileName>Energy.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Energy.c</FilePath>
+            </File>
+            <File>
+              <FileName>Commands.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Commands.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1370,14 +1370,14 @@
           <GroupName>Source Code</GroupName>
           <Files>
             <File>
-              <FileName>Mobility.c</FileName>
+              <FileName>Main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Mobility.c</FilePath>
+              <FilePath>.\Main.c</FilePath>
             </File>
             <File>
-              <FileName>Motor.c</FileName>
+              <FileName>Pwm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Motor.c</FilePath>
+              <FilePath>.\Pwm.c</FilePath>
             </File>
             <File>
               <FileName>Hall.c</FileName>
@@ -1385,14 +1385,14 @@
               <FilePath>.\Hall.c</FilePath>
             </File>
             <File>
-              <FileName>Commands.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Commands.c</FilePath>
-            </File>
-            <File>
               <FileName>Energy.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Energy.c</FilePath>
+            </File>
+            <File>
+              <FileName>Commands.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Commands.c</FilePath>
             </File>
           </Files>
         </Group>

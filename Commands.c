@@ -6,7 +6,7 @@
 #include "Type.h"
 
 #include "Commands.h"
-#include "Motor.h"
+#include "Pwm.h"
 #include "Hall.h"
 
 #define VERSION "Alpha-5"
@@ -92,7 +92,7 @@ void debug_cmd(uint8 *str)
         }
     }
 
-    if (str[0] == 'd')
+    if (str[0] == 'd')  //Set direction
     {
         motor = str[1] - '0';
         dir = str[2] - '0';
@@ -103,7 +103,7 @@ void debug_cmd(uint8 *str)
             printf("[DIR] motor: %d dir: %d\n\r", motor, dir);
     }
 
-    if (str[0] == 'v')
+    if (str[0] == 'v')  //Get version (testing)
     {
         printf(VERSION);
         printf("\n\r");

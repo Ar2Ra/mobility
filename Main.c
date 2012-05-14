@@ -13,7 +13,7 @@
 #include "Type.h"
 
 #include "Uart.h"
-#include "Motor.h"
+#include "Pwm.h"
 #include "Hall.h"
 #include "Energy.h"
 #include "Spi.h"
@@ -43,9 +43,11 @@ int main(void)
     led_init();
     //=======================================    
 
-    task_enable(0);
+    //task_enable(0);
 
     led_set(0x00);
+    
+    robot_stop();       //Initially stopped
     robot_fw();         //The default direction of the robot is forward
            
     while (1) 
