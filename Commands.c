@@ -3,13 +3,15 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 #include "Type.h"
 
 #include "Commands.h"
+#include "Task_mech.h"
 #include "Pwm.h"
 #include "Hall.h"
 
-#define VERSION "Alpha-5"
+#define VERSION "Beta-1"
 
 void simple_cmd(uint8 ch)
 {
@@ -56,8 +58,9 @@ void simple_cmd(uint8 ch)
 void debug_cmd(uint8 *str)
 {
     uint8 i;
-    uint8 nr, percent;
+    uint8 nr, state, percent;
     uint8 motor, dir;
+    uint32 period;
       
     if (str[0] == 'p')  //PWM set duty cycle
     {
@@ -107,5 +110,25 @@ void debug_cmd(uint8 *str)
     {
         printf(VERSION);
         printf("\n\r");
+    }
+    
+    if (str[0] == 't') //Task configuration
+    {
+        nr = str[1] - '0';
+        
+        if (str[2] == 'p')  //Set period
+        {
+            period = 0;
+            for (i = 3; str[i] != '\0'; i++)
+                period = (period * 10) + (str[i] - '0');
+
+            task_set_period(nr, period);
+            printf("[TASK] %d period: %d\n\r", nr, period);
+            return;
+        }
+        
+        state = str[2] - '0';
+        task_config(nr, state);
+        printf("[TASK] %d state: %d\n\r", nr, state);
     }       
 }

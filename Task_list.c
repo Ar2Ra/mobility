@@ -28,3 +28,8 @@ void hall_timeout(void)
         }
     }
 }
+
+void my_task1(void)
+{
+    printf("a");
+}

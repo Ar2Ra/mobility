@@ -26,11 +26,12 @@ typedef struct _task_struct
     Tasks config
 */
 //====================================================
-#define NR_TASKS 1
+#define NR_TASKS 2
 
 task_struct task[NR_TASKS] = 
 {
-    {100, hall_timeout, 0, 0}
+    {100, hall_timeout, 0, 0},
+    {500, my_task1, 0, 0}
 };
 
 //====================================================
@@ -64,6 +65,17 @@ int32 task_disable(uint8 nr)
     {
         task[nr].enable = 0;
         task[nr].counter = 0;
+        return 0;
+    }
+
+    return -1;
+}
+
+int32 task_set_period(uint8 nr, uint32 period)
+{
+    if (nr < NR_TASKS)
+    {
+        task[nr].period = period;
         return 0;
     }
 
