@@ -126,9 +126,9 @@ void debug_cmd(uint8 *str)
             printf("[TASK] %d period: %d\n\r", nr, period);
             return;
         }
-        
+
         state = str[2] - '0';
         task_config(nr, state);
         printf("[TASK] %d state: %d\n\r", nr, state);
-    }       
+    }
 }
