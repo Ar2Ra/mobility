@@ -10,3 +10,5 @@ The platform should use electrical DC motors with optical encoders or hall senso
 Controlling algorithms should provide antislip movement of the wheels (starting ramp +
 stopping ramp). Power mananagement for Li-Ion accumulators battery (used only for
 mobility platform) must be provided (excessive discharge protection, charge profile).
+
+MCB2140 test
