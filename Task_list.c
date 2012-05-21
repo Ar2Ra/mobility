@@ -9,6 +9,7 @@
 
 #include "Task_list.h"
 #include "Hall.h"
+#include "Adc.h"
 
 //extern
 
@@ -29,7 +30,7 @@ void hall_timeout(void)
     }
 }
 
-void my_task1(void)
+void energy_adc(void)
 {
-    printf("a");
+    adc_start();
 }

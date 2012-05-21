@@ -15,7 +15,7 @@
 #include "Uart.h"
 #include "Pwm.h"
 #include "Hall.h"
-#include "Energy.h"
+#include "Adc.h"
 #include "Spi.h"
 #include "Task_mech.h"
 
@@ -37,7 +37,7 @@ int main(void)
     init_uart();
     pwm_init();
     capture_init();
-    //adc_init();
+    adc_init();
     //spi_init();    
     task_init();
     led_init();

@@ -10,8 +10,9 @@
 #include "Task_mech.h"
 #include "Pwm.h"
 #include "Hall.h"
+#include "Adc.h"
 
-#define VERSION "Beta-1"
+#define VERSION "Beta-2"
 
 void simple_cmd(uint8 ch)
 {
@@ -60,7 +61,7 @@ void debug_cmd(uint8 *str)
     uint8 i;
     uint8 nr, state, percent;
     uint8 motor, dir;
-    uint32 period;
+    uint32 period, data;
       
     if (str[0] == 'p')  //PWM set duty cycle
     {
@@ -130,5 +131,13 @@ void debug_cmd(uint8 *str)
         state = str[2] - '0';
         task_config(nr, state);
         printf("[TASK] %d state: %d\n\r", nr, state);
+    }
+
+    if (str[0] == 'a') //ADC
+    {
+        nr = str[1] - '0';
+        data = sample_voltage(nr);
+
+        printf("[ADC] %d ch: %d\n\r", nr, data);
     }
 }

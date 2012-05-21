@@ -31,7 +31,7 @@ typedef struct _task_struct
 task_struct task[NR_TASKS] = 
 {
     {100, hall_timeout, 0, 0},
-    {500, my_task1, 0, 0}
+    {200, energy_adc, 0, 0}
 };
 
 //====================================================

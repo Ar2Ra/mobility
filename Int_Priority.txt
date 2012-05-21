@@ -5,4 +5,4 @@ Capture     4
 Taks        2
 
 SPI         0
-ADC
+ADC         3
