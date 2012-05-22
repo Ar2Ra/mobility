@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "Type.h"
 
-#include "Uart.h"
+#include "Uart0.h"
 #include "Pwm.h"
 #include "Hall.h"
 #include "Adc.h"
@@ -34,7 +34,7 @@ int main(void)
     */
     dir_init();
 
-    init_uart();
+    init_uart0();
     pwm_init();
     capture_init();
     adc_init();

@@ -437,14 +437,14 @@
               <FilePath>.\Hall.c</FilePath>
             </File>
             <File>
-              <FileName>Energy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Energy.c</FilePath>
-            </File>
-            <File>
               <FileName>Commands.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Commands.c</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Adc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -911,14 +911,14 @@
               <FilePath>.\Hall.c</FilePath>
             </File>
             <File>
-              <FileName>Energy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Energy.c</FilePath>
-            </File>
-            <File>
               <FileName>Commands.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Commands.c</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Adc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1385,14 +1385,14 @@
               <FilePath>.\Hall.c</FilePath>
             </File>
             <File>
-              <FileName>Energy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Energy.c</FilePath>
-            </File>
-            <File>
               <FileName>Commands.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Commands.c</FilePath>
+            </File>
+            <File>
+              <FileName>Adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Adc.c</FilePath>
             </File>
           </Files>
         </Group>

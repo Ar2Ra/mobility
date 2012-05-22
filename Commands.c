@@ -14,6 +14,8 @@
 
 #define VERSION "Beta-2"
 
+extern void led_set(uint8 state);
+
 void simple_cmd(uint8 ch)
 {
     switch (ch)
@@ -139,5 +141,12 @@ void debug_cmd(uint8 *str)
         data = sample_voltage(nr);
 
         printf("[ADC] %d ch: %d\n\r", nr, data);
+    }
+
+    if (str[0] == 'l') //LEDs
+    {
+        sscanf((const char *) str, "l%x", &data);
+        led_set(data);
+        printf("[LED] set: %#X\n\r", data);
     }
 }
