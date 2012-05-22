@@ -164,9 +164,9 @@ void debug_cmd(uint8 *str)
             printf("[DIR] motor: %d dir: %d\n\r", motor, dir);
     }
 
-    if (str[0] == 'v')  //Get version (testing)
+    if (str[0] == 'v')  //Get compile time
     {
-        printf( "Compiled on %s at %s\n\r", CompileDate, CompileTime );
+        printf("%s - %s\n\r", CompileDate, CompileTime );
     }
     
     if (str[0] == 't') //Task configuration
