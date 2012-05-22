@@ -6,14 +6,13 @@
 */
 
 #include <LPC21xx.H>
+#include <stdio.h>
 #include "Type.h"
 
 #include "Uart0.h"
 #include "Commands.h"
 
-#define BUF_SIZE 16
-
-uint8 buffer[BUF_SIZE];
+uint8 cmd_buffer[CMD_SIZE];
 
 uint8 pointer = 0;
 uint8 flag_debug = 0;
@@ -57,33 +56,24 @@ void UART0isr(void)	__irq
     {
         ch = U0RBR;                               //Read received character
         
-        if (flag_debug)
+        if (ch != '\r')                           //All commands end with this char
         {
-            if (ch != '\r')                       //All advanced commands end with this char
-            {
-                buffer[pointer] = ch;             //Store character in buffer
-                pointer++;                        //and increment pointer
-            }
-            else
-            {
-                buffer[pointer] = '\0';
-                debug_cmd(buffer);                //String completed, ready to send
-                
-                pointer = 0;
-                buffer[0] = '\0';
-                flag_debug = 0;
-            }
+            cmd_buffer[pointer] = ch;             //Store character in buffer
+            pointer++;                            //and increment pointer
         }
         else
         {
-            switch (ch)
-            {
-            case '_':                             //Debug commands start with this char
-                flag_debug = 1;
-                break;
-            default:
-                simple_cmd(ch);                   //No specified characters found, sending simple command
-            }
+            cmd_buffer[pointer] = '\0';
+            
+            /* cmd_buffer ready */
+            
+            add_cmd(cmd_buffer, 1);
+            
+            /* end */
+            
+            pointer = 0;
+            cmd_buffer[0] = '\0';
+            flag_debug = 0;
         }
     }
 

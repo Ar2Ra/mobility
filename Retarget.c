@@ -16,6 +16,7 @@ struct __FILE
 
 int fputc(int ch, FILE *f) 
 {
+    //if (f == stdout) return (uart0_sendchar(ch));          
     return (uart0_sendchar(ch));          /* Retarget fputc to serial UART      */
 }
 

@@ -20,11 +20,13 @@
 
 void ADC0isr(void)	__irq;
 
-typedef struct _adc_struct
+typedef struct _adc_struct adc_struct;
+
+struct _adc_struct
 {
     uint32 buffer[NR_SAMPLES];
     uint16 counter;
-} adc_struct;
+};
 
 adc_struct adc_data[NR_CHANNELS];
 

@@ -12,9 +12,64 @@
 #include "Hall.h"
 #include "Adc.h"
 
-#define VERSION "Beta-2"
+char *CompileTime = __TIME__;
+char *CompileDate = __DATE__;
 
-extern void led_set(uint8 state);
+typedef struct _ccb_struct ccb_struct;
+
+struct _ccb_struct
+{
+    uint8 cmd[CMD_SIZE];
+    uint8 source;
+};
+
+ccb_struct ccb[CMD_NUMB];   //Command Circular Buffer
+
+uint8 nr_cmds = 0;
+uint8 add_pos = 0;
+uint8 exec_pos = 0;
+
+uint8 commands_pending(void)
+{
+    return nr_cmds;
+}
+
+int32 add_cmd(uint8 *cmd, uint8 source)
+{
+    if (nr_cmds == CMD_NUMB) return -1;
+
+    ccb[add_pos].source = source;
+    strcpy((char *) ccb[add_pos].cmd, (const char *) cmd);
+    nr_cmds++;
+
+    add_pos = (add_pos + 1) % CMD_NUMB;
+    
+    return 0;
+}
+
+void interpret(uint8 *cmd, uint8 source)
+{
+    if (cmd[0] == '_') //debug command
+    {
+        cmd = cmd + 1;
+        debug_cmd(cmd);
+        return;
+    }
+
+    simple_cmd(cmd[0]);
+}
+
+int32 exec_cmd(void)
+{
+    if (nr_cmds == 0) return -1;
+    
+    interpret(ccb[exec_pos].cmd, ccb[exec_pos].source);
+    nr_cmds--;
+
+    exec_pos = (exec_pos + 1) % CMD_NUMB;
+    
+    return 0;
+}
 
 void simple_cmd(uint8 ch)
 {
@@ -111,8 +166,7 @@ void debug_cmd(uint8 *str)
 
     if (str[0] == 'v')  //Get version (testing)
     {
-        printf(VERSION);
-        printf("\n\r");
+        printf( "Compiled on %s at %s\n\r", CompileDate, CompileTime );
     }
     
     if (str[0] == 't') //Task configuration
@@ -141,12 +195,5 @@ void debug_cmd(uint8 *str)
         data = sample_voltage(nr);
 
         printf("[ADC] %d ch: %d\n\r", nr, data);
-    }
-
-    if (str[0] == 'l') //LEDs
-    {
-        sscanf((const char *) str, "l%x", &data);
-        led_set(data);
-        printf("[LED] set: %#X\n\r", data);
     }
 }

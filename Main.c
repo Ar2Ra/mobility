@@ -18,6 +18,7 @@
 #include "Adc.h"
 #include "Spi.h"
 #include "Task_mech.h"
+#include "Commands.h"
 
 //=============================================
 void delay(uint32 cnt);
@@ -52,6 +53,10 @@ int main(void)
            
     while (1) 
     {
+        if (commands_pending())
+        {
+            exec_cmd();
+        }
     }
     
 }
