@@ -53,9 +53,9 @@ int main(void)
            
     while (1) 
     {
-        if (commands_pending())
+        if (commands_pending(0))
         {
-            exec_cmd();
+            exec_cmd(0);
         }
     }
     

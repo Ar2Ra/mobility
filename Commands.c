@@ -19,35 +19,39 @@ typedef struct _ccb_struct ccb_struct;
 
 struct _ccb_struct
 {
-    uint8 cmd[CMD_SIZE];
-    uint8 source;
+    uint8 cmd[CMD_NUMB][CMD_SIZE];
+    uint8 nr_cmds;
+    uint8 add_pos;
+    uint8 exec_pos;
 };
 
-ccb_struct ccb[CMD_NUMB];   //Command Circular Buffer
+/*
+    only 1 for now
+    id:
+        0 - UART0
+*/
+ccb_struct ccb[CCB_NR];   //Command Circular Buffers
 
-uint8 nr_cmds = 0;
-uint8 add_pos = 0;
-uint8 exec_pos = 0;
-
-uint8 commands_pending(void)
+uint8 commands_pending(uint8 id)
 {
-    return nr_cmds;
+    return ccb[id].nr_cmds;
 }
 
-int32 add_cmd(uint8 *cmd, uint8 source)
+int32 add_cmd(uint8 id, uint8 *cmd)
 {
-    if (nr_cmds == CMD_NUMB) return -1;
+    uint8 p;
+    if (ccb[id].nr_cmds == CMD_NUMB) return -1;
 
-    ccb[add_pos].source = source;
-    strcpy((char *) ccb[add_pos].cmd, (const char *) cmd);
-    nr_cmds++;
+    p = ccb[id].add_pos;
+    strcpy((char *) ccb[id].cmd[p], (const char *) cmd);
+    ccb[id].nr_cmds++;
 
-    add_pos = (add_pos + 1) % CMD_NUMB;
+    ccb[id].add_pos = (ccb[id].add_pos + 1) % CMD_NUMB;
     
     return 0;
 }
 
-void interpret(uint8 *cmd, uint8 source)
+void interpret(uint8 id, uint8 *cmd)
 {
     if (cmd[0] == '_') //debug command
     {
@@ -59,14 +63,16 @@ void interpret(uint8 *cmd, uint8 source)
     simple_cmd(cmd[0]);
 }
 
-int32 exec_cmd(void)
+int32 exec_cmd(uint8 id)
 {
-    if (nr_cmds == 0) return -1;
-    
-    interpret(ccb[exec_pos].cmd, ccb[exec_pos].source);
-    nr_cmds--;
+    uint8 p;
+    if (ccb[id].nr_cmds == 0) return -1;
 
-    exec_pos = (exec_pos + 1) % CMD_NUMB;
+    p = ccb[id].exec_pos;    
+    interpret(id, ccb[id].cmd[p]);
+    ccb[id].nr_cmds--;
+
+    ccb[id].exec_pos = (ccb[id].exec_pos + 1) % CMD_NUMB;
     
     return 0;
 }

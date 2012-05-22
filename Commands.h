@@ -5,6 +5,7 @@
 #ifndef __COMMANDS_H
 #define __COMMANDS_H
 
+#define CCB_NR   1
 #define CMD_NUMB 8
 #define CMD_SIZE 24
 
@@ -13,14 +14,14 @@
     Used in UART ISR to add commands
     and in the main routine to check and execute them.
 */
-uint8 commands_pending(void);
-int32 add_cmd(uint8 *cmd, uint8 source);
-int32 exec_cmd(void);
+uint8 commands_pending(uint8 id);
+int32 add_cmd(uint8 id, uint8 *cmd);
+int32 exec_cmd(uint8 id);
 
 /*
     Interpret a command
 */
-void interpret(uint8 *cmd, uint8 source);
+void interpret(uint8 id, uint8 *cmd);
 
 /*
     Simple 1 character commands

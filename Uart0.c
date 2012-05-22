@@ -22,6 +22,7 @@ void UART0isr(void)	__irq;
 void init_uart0 (void)                                      //Initialize Serial Interface
 {              
     PINSEL0 |= 0x00000005;                                  //Enable RxD and TxD pins
+    
     U0LCR = 0x83;                                           //8 bits, no Parity, 1 Stop bit
     U0DLL = (VPB_CLOCK/16/UART0_BAUD_RATE) & 0xFF;          //Setup Baudrate
     U0DLM = ((VPB_CLOCK/16/UART0_BAUD_RATE) >> 8) & 0xFF;
@@ -67,7 +68,7 @@ void UART0isr(void)	__irq
             
             /* cmd_buffer ready */
             
-            add_cmd(cmd_buffer, 1);
+            add_cmd(0, cmd_buffer);
             
             /* end */
             
