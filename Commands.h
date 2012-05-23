@@ -5,7 +5,7 @@
 #ifndef __COMMANDS_H
 #define __COMMANDS_H
 
-#define CCB_NR   1
+#define CCB_NR   2
 #define CMD_NUMB 8
 #define CMD_SIZE 24
 
@@ -33,6 +33,6 @@ void simple_cmd(uint8 ch);
     All debug commands start with '_' character
     For now, UART only (printf function)
 */
-void debug_cmd(uint8 *str);
+void debug_cmd(uint8 id, uint8 *str);
 
 #endif  // __COMMANDS_H

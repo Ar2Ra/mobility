@@ -26,9 +26,9 @@ struct _ccb_struct
 };
 
 /*
-    only 1 for now
     id:
         0 - UART0
+        1 - UART1
 */
 ccb_struct ccb[CCB_NR];   //Command Circular Buffers
 
@@ -56,7 +56,7 @@ void interpret(uint8 id, uint8 *cmd)
     if (cmd[0] == '_') //debug command
     {
         cmd = cmd + 1;
-        debug_cmd(cmd);
+        debug_cmd(id, cmd);
         return;
     }
 
@@ -119,12 +119,15 @@ void simple_cmd(uint8 ch)
     }
 }
 
-void debug_cmd(uint8 *str)
+void debug_cmd(uint8 id, uint8 *str)
 {
     uint8 i;
     uint8 nr, state, percent;
     uint8 motor, dir;
     uint32 period, data;
+    
+    FILE *f;
+    f = (id == 0) ? stdout : stderr;
       
     if (str[0] == 'p')  //PWM set duty cycle
     {
@@ -137,9 +140,9 @@ void debug_cmd(uint8 *str)
        }
        
        if (pwm_set(nr, percent) < 0)
-           printf("[PWM] input err\n\r");
+           fprintf(f, "[PWM] input err\n\r");
        else
-           printf("[PWM] %d set %d\n\r", nr, percent);
+           fprintf(f, "[PWM] %d set %d\n\r", nr, percent);
     }
     
     if (str[0] == 'f')  //Read frequency [capture signals]
@@ -149,13 +152,13 @@ void debug_cmd(uint8 *str)
         switch (nr)
         {
             case 1:
-                printf("[Hall] f1: %d\n\r", hall_get(1));
+                fprintf(f, "[Hall] f1: %d\n\r", hall_get(1));
                 break;
             case 2:
-                printf("[Hall] f2: %d\n\r", hall_get(2));
+                fprintf(f, "[Hall] f2: %d\n\r", hall_get(2));
                 break;
             default:
-                printf("[Hall] input err\n\r");
+                fprintf(f, "[Hall] input err\n\r");
         }
     }
 
@@ -165,14 +168,14 @@ void debug_cmd(uint8 *str)
         dir = str[2] - '0';
 
         if (dir_set(motor, dir) < 0)
-            printf("[DIR] input err\n\r");
+            fprintf(f, "[DIR] input err\n\r");
         else
-            printf("[DIR] motor: %d dir: %d\n\r", motor, dir);
+            fprintf(f, "[DIR] motor: %d dir: %d\n\r", motor, dir);
     }
 
     if (str[0] == 'v')  //Get compile time
     {
-        printf("%s - %s\n\r", CompileDate, CompileTime );
+        fprintf(f, "%s - %s\n\r", CompileDate, CompileTime );
     }
     
     if (str[0] == 't') //Task configuration
@@ -186,13 +189,13 @@ void debug_cmd(uint8 *str)
                 period = (period * 10) + (str[i] - '0');
 
             task_set_period(nr, period);
-            printf("[TASK] %d period: %d\n\r", nr, period);
+            fprintf(f, "[TASK] %d period: %d\n\r", nr, period);
             return;
         }
 
         state = str[2] - '0';
         task_config(nr, state);
-        printf("[TASK] %d state: %d\n\r", nr, state);
+        fprintf(f, "[TASK] %d state: %d\n\r", nr, state);
     }
 
     if (str[0] == 'a') //ADC
@@ -200,6 +203,6 @@ void debug_cmd(uint8 *str)
         nr = str[1] - '0';
         data = sample_voltage(nr);
 
-        printf("[ADC] %d ch: %d\n\r", nr, data);
+        fprintf(f, "[ADC] %d ch: %d\n\r", nr, data);
     }
 }

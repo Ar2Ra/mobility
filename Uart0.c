@@ -1,5 +1,5 @@
 /*
-    UART
+    UART0
     Low level serial routines
 
     Uart0.c
@@ -9,13 +9,12 @@
 #include <stdio.h>
 #include "Type.h"
 
+#include "Misc.h"
 #include "Uart0.h"
 #include "Commands.h"
 
-uint8 cmd_buffer[CMD_SIZE];
-
-uint8 pointer = 0;
-uint8 flag_debug = 0;
+uint8 cmd_buffer0[CMD_SIZE];
+uint8 pointer0 = 0;
 
 void UART0isr(void)	__irq;
 
@@ -59,22 +58,21 @@ void UART0isr(void)	__irq
         
         if (ch != '\r')                           //All commands end with this char
         {
-            cmd_buffer[pointer] = ch;             //Store character in buffer
-            pointer++;                            //and increment pointer
+            cmd_buffer0[pointer0] = ch;           //Store character in buffer
+            pointer0++;                           //and increment pointer
         }
         else
         {
-            cmd_buffer[pointer] = '\0';
+            cmd_buffer0[pointer0] = '\0';
             
             /* cmd_buffer ready */
             
-            add_cmd(0, cmd_buffer);
+            add_cmd(0, cmd_buffer0);
             
             /* end */
             
-            pointer = 0;
-            cmd_buffer[0] = '\0';
-            flag_debug = 0;
+            pointer0 = 0;
+            cmd_buffer0[0] = '\0';
         }
     }
 

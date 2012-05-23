@@ -6,6 +6,7 @@
 #include <rt_misc.h>
 #include "Type.h"
 #include "Uart0.h"
+#include "Uart1.h"
 
 #pragma import(__use_no_semihosting_swi)
 
@@ -16,7 +17,7 @@ struct __FILE
 
 int fputc(int ch, FILE *f) 
 {
-    //if (f == stdout) return (uart0_sendchar(ch));          
+    if (f == stderr) return (uart1_sendchar(ch));          
     return (uart0_sendchar(ch));          /* Retarget fputc to serial UART      */
 }
 

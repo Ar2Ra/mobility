@@ -416,6 +416,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart0.c</FilePath>
             </File>
+            <File>
+              <FileName>Uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -889,6 +894,11 @@
               <FileName>Uart0.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart0.c</FilePath>
+            </File>
+            <File>
+              <FileName>Uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Uart1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1402,6 +1412,11 @@
               <FileName>Uart0.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart0.c</FilePath>
+            </File>
+            <File>
+              <FileName>Uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Uart1.c</FilePath>
             </File>
           </Files>
         </Group>

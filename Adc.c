@@ -67,8 +67,8 @@ void adc_init(void)
     AD0CR |= (CLKDIV << 8);                    //11 clocks / 10 bits @ 3.75MHz
     AD0INTEN |= (1 << 1);                      //Enable channel 1 interrupt
 
-    VICVectAddr3 = (uint32) ADC0isr;           //Set the ADC0 ISR vector address
-    VICVectCntl3 = 0x00000020 | 18;            //Set channel for ADC0
+    VICVectAddr5 = (uint32) ADC0isr;           //Set the ADC0 ISR vector address
+    VICVectCntl5 = 0x00000020 | 18;            //Set channel for ADC0
     VICIntEnable |= (1 << 18);                 //Enable the interrupt ADC0
 
     AD0CR |= SEL;                              //Select channel 1

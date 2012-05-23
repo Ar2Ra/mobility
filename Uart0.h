@@ -5,12 +5,10 @@
     Uart.h
 */
 
-#ifndef __UART_H
-#define __UART_H
+#ifndef __UART0_H
+#define __UART0_H
 
 // <h> Setup Communication Speed
-//   <o> VPB Clock <0-60000000>
-#define VPB_CLOCK 15000000
 
 //   <o> Baudrate 
 //        <0=>     600 Bauds
@@ -46,4 +44,4 @@ void init_uart0 (void);             //Initialize Serial Interface
 uint8 uart0_sendchar (uint8 ch);    //Implementation of putchar (also used by printf function to output data)
 uint8 uart0_getkey (void);          //Read character from Serial Port
 
-#endif  // __UART_H
+#endif  // __UART0_H

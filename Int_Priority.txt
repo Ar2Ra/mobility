@@ -1,8 +1,8 @@
-Current Interrupt Priority
+Interrupt Priority (Current Configuration)
 
-UART        1
-Capture     4
-Taks        2
-
-SPI         0
-ADC         3
+SPI          0
+UART0        1
+UART1        2
+Taks         3
+Capture      4
+ADC          5

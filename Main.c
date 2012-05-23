@@ -13,6 +13,7 @@
 #include "Type.h"
 
 #include "Uart0.h"
+#include "Uart1.h"
 #include "Pwm.h"
 #include "Hall.h"
 #include "Adc.h"
@@ -36,10 +37,12 @@ int main(void)
     dir_init();
 
     init_uart0();
+    //init_uart1();
+    //spi_init();        
+
     pwm_init();
     capture_init();
-    adc_init();
-    //spi_init();    
+    adc_init();    
     task_init();
     led_init();
     //=======================================    
@@ -56,6 +59,11 @@ int main(void)
         if (commands_pending(0))
         {
             exec_cmd(0);
+        }
+
+        if (commands_pending(1))
+        {
+            exec_cmd(1);
         }
     }
     

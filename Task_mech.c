@@ -92,8 +92,8 @@ void task_init(void)
     
     T0TCR = 0x00000001;                  //Enable timer
 
-    VICVectAddr2 = (uint32) T0isr;       //Set the timer ISR vector address
-    VICVectCntl2 = 0x00000020 | 4;       //Set channel for TIMER0
+    VICVectAddr3 = (uint32) T0isr;       //Set the timer ISR vector address
+    VICVectCntl3 = 0x00000020 | 4;       //Set channel for TIMER0
     VICIntEnable |= 0x00000010;          //Enable the interrupt TIMER1
 }
 
