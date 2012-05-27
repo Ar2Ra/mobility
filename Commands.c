@@ -131,7 +131,7 @@ void debug_cmd(uint8 id, uint8 *str)
       
     if (str[0] == 'p')  //PWM set duty cycle
     {
-       nr = str[1] - '0';
+       motor = str[1] - '0';
        
        percent = 0;
        for (i = 0; i < 3; i++)
@@ -139,27 +139,22 @@ void debug_cmd(uint8 id, uint8 *str)
          percent = percent * 10 + str[i + 2] - '0';
        }
        
-       if (pwm_set(nr, percent) < 0)
+       if (pwm_set_percent(motor, percent) < 0)
            fprintf(f, "[PWM] input err\n\r");
        else
-           fprintf(f, "[PWM] %d set %d\n\r", nr, percent);
+           fprintf(f, "[PWM] %d set %d\n\r", motor, percent);
     }
     
     if (str[0] == 'f')  //Read frequency [capture signals]
     {
-        nr = str[1] - '0';
-
-        switch (nr)
+        motor = str[1] - '0';
+        if (motor < 1 || motor > 2)
         {
-            case 1:
-                fprintf(f, "[Hall] f1: %d\n\r", hall_get(1));
-                break;
-            case 2:
-                fprintf(f, "[Hall] f2: %d\n\r", hall_get(2));
-                break;
-            default:
-                fprintf(f, "[Hall] input err\n\r");
+            fprintf(f, "[HALL] input err\n\r");
+            return;
         }
+
+        fprintf(f, "[HALL %d] PWM - %d Freq - %d\n\r", motor, pwm_get_raw(motor), hall_get(motor));
     }
 
     if (str[0] == 'd')  //Set direction
@@ -171,6 +166,22 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[DIR] input err\n\r");
         else
             fprintf(f, "[DIR] motor: %d dir: %d\n\r", motor, dir);
+    }
+
+    if (str[0] == 'm') //Motor status
+    {
+        motor = str[1] - '0';
+        if (motor < 1 || motor > 2)
+        {
+            fprintf(f, "[MOTOR] input err\n\r");
+            return;
+        }
+
+        data = pwm_get_raw(motor);
+        percent = pwm_get_percent(motor);
+        dir = dir_get(motor);
+
+        fprintf(f, "[MOTOR %d] PWM - %d (%d%%) DIR - %d\n\r", motor, data, percent, dir);
     }
 
     if (str[0] == 'v')  //Get compile time

@@ -34,6 +34,7 @@ int main(void)
     /*
         Initialize peripherals
     */
+    //=======================================
     dir_init();
 
     init_uart0();
@@ -45,15 +46,20 @@ int main(void)
     adc_init();    
     task_init();
     led_init();
-    //=======================================    
+    //=======================================
 
+    /*
+        Default state (values)
+    */
+    //=======================================
     //task_enable(0);
 
     led_set(0x00);
     
     robot_stop();       //Initially stopped
     robot_fw();         //The default direction of the robot is forward
-           
+    //=======================================
+
     while (1) 
     {
         if (commands_pending(0))

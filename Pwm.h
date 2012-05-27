@@ -14,16 +14,25 @@
 void pwm_init(void);
 
 /*
-    Set duty cycle in percentage [0-100] %
-    for one of the two PWM channels
-    nr - 1 (left motor pwm)
-    nr - 2 (right motor pwm)
-    nr - 3 (set same duty cycle for both motors)
+    Set duty cycle in percentage [0-100]% or in raw values
+    for one of the two PWM channels (or both)
+        motor - 1 (left motor pwm)
+        motor - 2 (right motor pwm)
+        motor - 3 (set same duty cycle for both motors)
 
-    pwm_set(3, 0);    (soft stop)
-    pwm_set(3, 100);  (full speed)
+    return value is negative if error
 */
-int32 pwm_set(uint8 nr, uint8 percent);
+int32 pwm_set_percent(uint8 motor, uint8 percent);
+int32 pwm_set_raw(uint8 motor, uint32 val);
+
+/*
+    Get duty cycle in percentage [0-100]% or in raw values
+    for one of the two PWM channels
+        motor - 1 (left motor pwm)
+        motor - 2 (right motor pwm)
+*/
+uint8 pwm_get_percent(uint8 motor);
+uint32 pwm_get_raw(uint8 motor);
 
 /*
     Initialize the 4 output pins for motor direction
@@ -34,11 +43,22 @@ void dir_init(void);
     motor = 1, 2
 	
     dir
-	1 - forward
-	2 - backward
-	3 - brake
+	    1 - forward
+	    2 - backward
+	    3 - brake
 */
 int32 dir_set(uint8 motor, uint8 dir);
+
+/*
+    Get current direction (forward, backward, brake)
+    motor = 1, 2
+    
+    return values
+        1 - forward
+        2 - backward
+        3 - brake
+*/
+uint8 dir_get(uint8 motor);
 
 /*
     Robot basic movement functions [alpha]

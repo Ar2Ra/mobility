@@ -36,33 +36,33 @@ void capture_init(void)
     VICIntEnable |= (1 << 5);           //Enable the interrupt TIMER1
 }
 
-uint32 hall_get(uint8 nr)
+uint32 hall_get(uint8 motor)
 {
-    if (nr == 1) return signal_freq1;   //Rotations per second for left motor
-    if (nr == 2) return signal_freq2;   //Rotations per second for right motor
+    if (motor == 1) return signal_freq1;            //Rotations per second for left motor
+    if (motor == 2) return signal_freq2;            //Rotations per second for right motor
 
     return 0;
 }
 
-void hall_update(uint8 nr, uint32 new_value)
+void hall_update(uint8 motor, uint32 new_value)
 {
-    if (nr == 1) signal_freq1 = new_value;
-    if (nr == 2) signal_freq2 = new_value;
+    if (motor == 1) signal_freq1 = new_value;       //Override data from 1st Hall sensor
+    if (motor == 2) signal_freq2 = new_value;       //Override data from 2nd Hall sensor
     
     return;
 }
 
-void hall_reset(uint8 nr)
+void hall_reset(uint8 motor)
 {
-    switch (nr)
+    switch (motor)
     {
-    case 1:
+    case 1:                                         //Reset data from 1st Hall sensor
         signal_freq1 = 0;
         break;
-    case 2:
+    case 2:                                         //Reset data from 2nd Hall sensor
         signal_freq2 = 0;
         break;
-    case 3:
+    case 3:                                         //Reset data from both Hall sensors
         signal_freq1 = 0;
         signal_freq2 = 0;
     }
@@ -76,12 +76,12 @@ uint32 compute_freq(uint32 current, uint32 last)
     return (1000000 * RES / den);
 }
 
-uint32 hall_now(uint8 nr)
+uint32 hall_now(uint8 motor)
 {
-    if (nr == 1)
+    if (motor == 1)
         return compute_freq(T1TC, last_capture1);
 
-    if (nr == 2)
+    if (motor == 2)
         return compute_freq(T1TC, last_capture2);
 
     return 0;
