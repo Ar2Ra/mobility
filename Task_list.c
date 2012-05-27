@@ -26,7 +26,7 @@ void hall_timeout(void)
 
         if (b < a)
         {
-            printf("%u\n\r", b); 
+            printf("%u\r\n", b); 
             hall_update(1, b);
         }
     }

@@ -421,6 +421,11 @@
               <FileType>1</FileType>
               <FilePath>.\Uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>Bluetooth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Bluetooth.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -899,6 +904,11 @@
               <FileName>Uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>Bluetooth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Bluetooth.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1417,6 +1427,11 @@
               <FileName>Uart1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>Bluetooth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Bluetooth.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -11,6 +11,7 @@
 #include "Pwm.h"
 #include "Hall.h"
 #include "Adc.h"
+#include "Bluetooth.h"
 
 char *CompileTime = __TIME__;
 char *CompileDate = __DATE__;
@@ -53,12 +54,20 @@ int32 add_cmd(uint8 id, uint8 *cmd)
 
 void interpret(uint8 id, uint8 *cmd)
 {
-    if (cmd[0] == '_') //debug command
+    if (id == 1)                    //on UART1
+    {
+        if (bt_valid_cmd(cmd))      //Is this a bluetooth system command?
+        {
+            bt_command(cmd);        //Send the command to the appropriate handler
+        }
+    }
+
+    if (cmd[0] == '_')              //debug command
     {
         cmd = cmd + 1;
         debug_cmd(id, cmd);
         return;
-    }
+    }  
 
     simple_cmd(cmd[0]);
 }
@@ -140,9 +149,9 @@ void debug_cmd(uint8 id, uint8 *str)
        }
        
        if (pwm_set_percent(motor, percent) < 0)
-           fprintf(f, "[PWM] input err\n\r");
+           fprintf(f, "[PWM] input err\r\n");
        else
-           fprintf(f, "[PWM] %d set %d\n\r", motor, percent);
+           fprintf(f, "[PWM] %d set %d\r\n", motor, percent);
     }
     
     if (str[0] == 'f')  //Read frequency [capture signals]
@@ -150,11 +159,11 @@ void debug_cmd(uint8 id, uint8 *str)
         motor = str[1] - '0';
         if (motor < 1 || motor > 2)
         {
-            fprintf(f, "[HALL] input err\n\r");
+            fprintf(f, "[HALL] input err\r\n");
             return;
         }
 
-        fprintf(f, "[HALL %d] PWM - %d Freq - %d\n\r", motor, pwm_get_raw(motor), hall_get(motor));
+        fprintf(f, "[HALL %d] PWM - %d Freq - %d\r\n", motor, pwm_get_raw(motor), hall_get(motor));
     }
 
     if (str[0] == 'd')  //Set direction
@@ -163,9 +172,9 @@ void debug_cmd(uint8 id, uint8 *str)
         dir = str[2] - '0';
 
         if (dir_set(motor, dir) < 0)
-            fprintf(f, "[DIR] input err\n\r");
+            fprintf(f, "[DIR] input err\r\n");
         else
-            fprintf(f, "[DIR] motor: %d dir: %d\n\r", motor, dir);
+            fprintf(f, "[DIR] motor: %d dir: %d\r\n", motor, dir);
     }
 
     if (str[0] == 'm') //Motor status
@@ -173,7 +182,7 @@ void debug_cmd(uint8 id, uint8 *str)
         motor = str[1] - '0';
         if (motor < 1 || motor > 2)
         {
-            fprintf(f, "[MOTOR] input err\n\r");
+            fprintf(f, "[MOTOR] input err\r\n");
             return;
         }
 
@@ -181,12 +190,12 @@ void debug_cmd(uint8 id, uint8 *str)
         percent = pwm_get_percent(motor);
         dir = dir_get(motor);
 
-        fprintf(f, "[MOTOR %d] PWM - %d (%d%%) DIR - %d\n\r", motor, data, percent, dir);
+        fprintf(f, "[MOTOR %d] PWM - %d (%d%%) DIR - %d\r\n", motor, data, percent, dir);
     }
 
     if (str[0] == 'v')  //Get compile time
     {
-        fprintf(f, "[COMPILED] %s - %s\n\r", CompileDate, CompileTime );
+        fprintf(f, "[COMPILED] %s - %s\r\n", CompileDate, CompileTime );
     }
     
     if (str[0] == 't') //Task configuration
@@ -200,20 +209,31 @@ void debug_cmd(uint8 id, uint8 *str)
                 period = (period * 10) + (str[i] - '0');
 
             task_set_period(nr, period);
-            fprintf(f, "[TASK] %d period: %d\n\r", nr, period);
+            fprintf(f, "[TASK] %d period: %d\r\n", nr, period);
             return;
         }
 
         state = str[2] - '0';
         task_config(nr, state);
-        fprintf(f, "[TASK] %d state: %d\n\r", nr, state);
+        fprintf(f, "[TASK] %d state: %d\r\n", nr, state);
     }
 
     if (str[0] == 'a') //ADC
     {
         nr = str[1] - '0';
+        if (nr != 0)   //TODO
+        {
+            fprintf(f, "[ADC] input err\r\n");
+            return;
+        }
+
         data = sample_voltage(nr);
 
-        fprintf(f, "[ADC] %d ch: %d\n\r", nr, data);
+        fprintf(f, "[ADC] %d ch: %d\r\n", nr, data);
+    }
+
+    if (str[0] == 'b') //Bluetooth
+    {
+        fprintf(f, "[BT] Connected: %d\r\n", bt_connected());
     }
 }

@@ -20,6 +20,7 @@
 #include "Spi.h"
 #include "Task_mech.h"
 #include "Commands.h"
+#include "Bluetooth.h"
 
 //=============================================
 void delay(uint32 cnt);
@@ -52,6 +53,8 @@ int main(void)
         Default state (values)
     */
     //=======================================
+    bt_server();
+    
     //task_enable(0);
 
     led_set(0x00);

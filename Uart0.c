@@ -56,7 +56,7 @@ void UART0isr(void)	__irq
     {
         ch = U0RBR;                               //Read received character
         
-        if (ch != '\r')                           //All commands end with this char
+        if (ch != '\r' && ch != '\n')             //All commands end with these chars
         {
             cmd_buffer0[pointer0] = ch;           //Store character in buffer
             pointer0++;                           //and increment pointer
@@ -67,7 +67,8 @@ void UART0isr(void)	__irq
             
             /* cmd_buffer ready */
             
-            add_cmd(0, cmd_buffer0);
+            if (pointer0 > 0)                     //If command is not empty
+                add_cmd(0, cmd_buffer0);
             
             /* end */
             
