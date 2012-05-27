@@ -101,8 +101,10 @@ void led_set(uint8 state)
 
 void led_bits(uint8 set, uint8 bit)
 {
+    if (bit > 7) return;
+
     if (set)
-        IO1SET |= (bit << 16);
+        IO1SET |= (1 << (16 + bit));
     else
-        IO1CLR |= (bit << 16);
+        IO1CLR |= (1 << (16 + bit));
 }

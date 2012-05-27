@@ -486,6 +486,11 @@
               <FileType>5</FileType>
               <FilePath>.\Int_Priority.txt</FilePath>
             </File>
+            <File>
+              <FileName>Leds_indicator.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Leds_indicator.txt</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1009,6 +1014,11 @@
               <FileType>5</FileType>
               <FilePath>.\Int_Priority.txt</FilePath>
             </File>
+            <File>
+              <FileName>Leds_indicator.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Leds_indicator.txt</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -1492,6 +1502,11 @@
               <FileName>Int_Priority.txt</FileName>
               <FileType>5</FileType>
               <FilePath>.\Int_Priority.txt</FilePath>
+            </File>
+            <File>
+              <FileName>Leds_indicator.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Leds_indicator.txt</FilePath>
             </File>
           </Files>
         </Group>

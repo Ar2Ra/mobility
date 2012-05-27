@@ -12,6 +12,8 @@
 
 uint8 connected = 0;
 
+extern void led_bits(uint8 set, uint8 bit);
+
 void bt_server(void)
 {
     fprintf(stderr, "AT+BTSCAN\r");
@@ -27,8 +29,17 @@ void bt_command(uint8 *cmd)
     if (BT_ECHO) //Echo all bluetooth commands on UART0
         fprintf(stdout, "[BT] %s\r\n", cmd);
 
-    if (strstr((const char *) cmd, "CONNECT")) connected = 1;
-    if (strstr((const char *) cmd, "DISCONNECT")) connected = 0;
+    if (strstr((const char *) cmd, "CONNECT"))
+    {
+        led_bits(1, 0);
+        connected = 1;
+    }
+    
+    if (strstr((const char *) cmd, "DISCONNECT"))
+    {
+        led_bits(0, 0);
+        connected = 0;
+    }
 }
 
 uint8 bt_valid_cmd(uint8 *cmd)
