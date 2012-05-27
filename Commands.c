@@ -175,7 +175,7 @@ void debug_cmd(uint8 id, uint8 *str)
 
     if (str[0] == 'v')  //Get compile time
     {
-        fprintf(f, "%s - %s\n\r", CompileDate, CompileTime );
+        fprintf(f, "[COMPILED] %s - %s\n\r", CompileDate, CompileTime );
     }
     
     if (str[0] == 't') //Task configuration

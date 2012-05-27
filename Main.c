@@ -37,7 +37,7 @@ int main(void)
     dir_init();
 
     init_uart0();
-    //init_uart1();
+    init_uart1();
     //spi_init();        
 
     pwm_init();

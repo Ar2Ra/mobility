@@ -58,8 +58,8 @@ void UART1isr(void)	__irq
         
         if (ch != '\r')                           //All commands end with this char
         {
-            cmd_buffer1[pointer1] = ch;             //Store character in buffer
-            pointer1++;                            //and increment pointer
+            cmd_buffer1[pointer1] = ch;           //Store character in buffer
+            pointer1++;                           //and increment pointer
         }
         else
         {

@@ -15,19 +15,20 @@
 
 void pwm_init(void)
 {
-    PINSEL0 |= (1 << 17) | (1 << 19);             //PWM4 & PWM6
+    PINSEL0 |= (1 << 15);                         //PWM2
+    PINSEL1 |= (1 << 10);                         //PWM5
 
     PWMPR = 0x00000000;                           //Load prescaler maximum
 
     PWMMR0 = PWM_M0;                              //Match 0 - frequency
 
     //currently duty cycle is 0%    
-    PWMMR4 = 0;                                   //Duty cycle PWM4
-    PWMMR6 = 0;                                   //Duty cycle PWM6
-    PWMLER |= (1 << 0) | (1 << 4) | (1 << 6);     //Latch enable Match4 & Match6
+    PWMMR2 = 0;                                   //Duty cycle PWM2
+    PWMMR5 = 0;                                   //Duty cycle PWM5
+    PWMLER |= (1 << 0) | (1 << 2) | (1 << 5);     //Latch enable Match2 & Match5
 
     PWMMCR = 0x00000002;                          //On match with timer reset the counter
-    PWMPCR |= (1 << 12) | (1 << 14);              //The PWM4 & PWM6 output enabled.
+    PWMPCR |= (1 << 10) | (1 << 13);              //The PWM2 & PWM5 output enabled.
     PWMTCR = 0x00000002;                          //Reset counter and prescaler
     PWMTCR = 0x00000009;                          //PWM Enable & Counter Enable
 
@@ -45,20 +46,20 @@ int32 pwm_set(uint8 nr, uint8 percent)
     switch (nr)
     {
         case 1:
-            PWMMR4 = val;
+            PWMMR2 = val;
             break;
         case 2:
-            PWMMR6 = val;
+            PWMMR5 = val;
             break;
         case 3:
-            PWMMR4 = val;
-            PWMMR6 = val;
+            PWMMR2 = val;
+            PWMMR5 = val;
             break;
         default:
             return -2;           
     }
 
-    PWMLER |= (1 << 4) | (1 << 6);      //Latch enable Match4 & Match6
+    PWMLER |= (1 << 2) | (1 << 5);      //Latch enable Match2 & Match5
     return 0;                           //SUCCESS
 }
 
@@ -66,17 +67,17 @@ void dir_init(void)
 {
     /*
         L298N
-        Input 1	- P0.12
-        Input 2	- P0.13
-        Input 3	- P0.14
-        Input 4	- P0.15
+        Input 1	- P1.24
+        Input 2	- P1.25
+        Input 3	- P1.26
+        Input 4	- P1.27
     */
 
-    //Pin 12, 13, 14, 15 as output (motor direction)
-    IO0DIR |= (0x0000000F << 12);
+    //Pin 24, 25, 26, 27 (PORT 1) as output (motor direction)
+    IO1DIR |= (0x0000000F << 24);
 
     //Clear all outputs
-    IO0CLR |= (1 << 12) | (1 << 13) | (1 << 14) | (1 << 15);
+    IO1CLR |= (0x0000000F << 24);
 }
 
 int32 dir_set(uint8 motor, uint8 dir)
@@ -86,12 +87,12 @@ int32 dir_set(uint8 motor, uint8 dir)
     switch (motor)
     {
         case 1:             //MOTOR 1
-            in1 = 13;
-            in2 = 12;
+            in1 = 24;       //Input 1
+            in2 = 25;       //Input 2
             break;
         case 2:             //MOTOR 2
-            in1 = 14;
-            in2 = 15;
+            in1 = 26;       //Input 3
+            in2 = 27;       //Input 4
             break;
         default:
             return -1;
@@ -100,16 +101,16 @@ int32 dir_set(uint8 motor, uint8 dir)
     switch (dir)
     {
         case 1:             //Forward
-            IO0SET |= (1 << in1);
-            IO0CLR |= (1 << in2);
+            IO1SET |= (1 << in1);
+            IO1CLR |= (1 << in2);
             break;
         case 2:             //Backward
-            IO0CLR |= (1 << in1);
-            IO0SET |= (1 << in2);
+            IO1CLR |= (1 << in1);
+            IO1SET |= (1 << in2);
             break;
         case 3:             //Break
-            IO0SET |= (1 << in1);
-            IO0SET |= (1 << in2);
+            IO1SET |= (1 << in1);
+            IO1SET |= (1 << in2);
             break;
         default:
             return -2;
@@ -132,14 +133,14 @@ void robot_bw(void)        //move backward
 
 void robot_left(void)      //turn left (on spot)
 {
-    dir_set(1, 2);
-    dir_set(2, 1);
+    dir_set(1, 1);
+    dir_set(2, 2);
 }
 
 void robot_right(void)     //turn right (on spot)
 {
-    dir_set(1, 1);
-    dir_set(2, 2);
+    dir_set(1, 2);
+    dir_set(2, 1);
 }
 
 void robot_brake(void)     //forced stop
