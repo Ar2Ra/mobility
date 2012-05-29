@@ -16,6 +16,7 @@
 char *CompileTime = __TIME__;
 char *CompileDate = __DATE__;
 
+//Command circular buffer
 typedef struct _ccb_struct ccb_struct;
 
 struct _ccb_struct
@@ -220,20 +221,30 @@ void debug_cmd(uint8 id, uint8 *str)
 
     if (str[0] == 'a') //ADC
     {
-        nr = str[1] - '0';
-        if (nr != 0)   //TODO
+        nr = str[1] - '0';       
+
+        switch (nr)
         {
+        case 0:
+            fprintf(f, "[ADC] Battery: %d\r\n", adc_read_battery());
+            break;
+        //case 1:
+        //case 2:
+        default:
             fprintf(f, "[ADC] input err\r\n");
-            return;
         }
-
-        data = sample_voltage(nr);
-
-        fprintf(f, "[ADC] %d ch: %d\r\n", nr, data);
     }
 
     if (str[0] == 'b') //Bluetooth
     {
+        //Redirect Bluetooth AT commands directly from UART0 to UART1
+        if ( (str[1] == '_')  && (f == stdout) )
+        {
+            fprintf(stderr, "%s\r", str + 2);
+            return;
+        }
+        
+        //If only "_b" command was issued, then print out connection status
         fprintf(f, "[BT] Connected: %d\r\n", bt_connected());
     }
 }
