@@ -657,7 +657,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>25</ColumnNumber>
+      <ColumnNumber>34</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>212</TopLine>
       <CurrentLine>212</CurrentLine>
@@ -671,10 +671,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>17</ColumnNumber>
+      <ColumnNumber>26</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>56</TopLine>
-      <CurrentLine>56</CurrentLine>
+      <TopLine>25</TopLine>
+      <CurrentLine>38</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Adc.c</PathWithFileName>
       <FilenameWithoutPath>Adc.c</FilenameWithoutPath>
@@ -708,7 +708,7 @@
       <Focus>0</Focus>
       <ColumnNumber>13</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>13</TopLine>
+      <TopLine>17</TopLine>
       <CurrentLine>39</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Task_mech.c</PathWithFileName>

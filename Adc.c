@@ -35,7 +35,7 @@ void sample_add(uint8 ch, uint32 sample)
 
 uint32 adc_read_battery(void)
 {
-    return (sample_avg(0) * ADC_BAT_DIV);
+    return (sample_voltage(0) * ADC_BAT_DIV);
 }
 
 uint32 sample_avg(uint8 ch)
