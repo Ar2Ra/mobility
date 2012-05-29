@@ -53,9 +53,9 @@ int main(void)
         Default state (values)
     */
     //=======================================
-    bt_server();
+    bt_server();        //Make device discoverable
     
-    //task_enable(0);
+    task_enable(0);     //Enable Hall Timeout Task
 
     led_set(0x00);
     

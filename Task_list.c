@@ -17,17 +17,21 @@
 
 void hall_timeout(void)
 {
-    uint32 a, b;
+    uint8 motor_nr;
+    uint32 motor_speed, motor_speed_now;
 
-    a = hall_get(1);
-    if (a > 0)
+    for (motor_nr = 1; motor_nr <=2; motor_nr++)
     {
-        b = hall_now(1);
-
-        if (b < a)
+        motor_speed = hall_get(motor_nr);
+        if (motor_speed > 0)
         {
-            printf("%u\r\n", b); 
-            hall_update(1, b);
+            motor_speed_now = hall_now(motor_nr);
+    
+            if (motor_speed_now < motor_speed)
+            {
+                //printf("%d: %d\r\n", motor_nr, motor_speed_now); 
+                hall_update(motor_nr, motor_speed_now);
+            }
         }
     }
 }
