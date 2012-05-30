@@ -9,13 +9,6 @@
 
 #include "Hall.h"
 
-/*
-    Resolution
-    1 - Hz
-    1000 - mHz
-*/
-#define RES 1
-
 uint32 last_capture1 = 0, signal_freq1 = 0;
 uint32 last_capture2 = 0, signal_freq2 = 0;
 
@@ -73,7 +66,7 @@ uint32 compute_freq(uint32 current, uint32 last)
     uint32 den;
     den = current - last;
 
-    return (1000000 * RES / den);
+    return (1000000 * HALL_RES / den);
 }
 
 uint32 hall_now(uint8 motor)

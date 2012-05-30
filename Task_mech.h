@@ -7,6 +7,8 @@
 #ifndef __TASK_MECH_H
 #define __TASK_MECH_H
 
+#define ISR_CYCLE 1000 //ISR @ every ISR_CYCLE useconds
+
 /*
     Initialize Timer0 for tasks
 */

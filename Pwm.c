@@ -10,9 +10,6 @@
 
 #include "Pwm.h"
 
-//Match 0 - frequency PWM [4 kHz] 15e6 / 4e3 = 3750
-#define PWM_M0  3750
-
 uint8 motor1_dir;
 uint8 motor2_dir;
 

@@ -8,6 +8,9 @@
 #ifndef __PWM_H
 #define __PWM_H
 
+//Match 0 - frequency PWM [4 kHz] 15e6 / 4e3 = 3750
+#define PWM_M0  3750
+
 /*
     Initialize PWM module
 */

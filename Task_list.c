@@ -13,7 +13,7 @@
 #include "Hall.h"
 #include "Adc.h"
 
-//extern
+uint8 sample_channel = 0;
 
 void hall_timeout(void)
 {
@@ -38,5 +38,6 @@ void hall_timeout(void)
 
 void energy_adc(void)
 {
-    adc_start();
+    adc_start(sample_channel);
+    sample_channel = (sample_channel + 1) % ADC_NR_CHANNELS;
 }

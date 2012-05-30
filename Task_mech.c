@@ -11,7 +11,6 @@
 #include "Task_mech.h"
 #include "Task_list.h"
 
-#define ISR_CYCLE 1000 //ISR @ every ISR_CYCLE useconds
 void T0isr (void)    __irq;
 
 typedef struct _task_struct
@@ -26,12 +25,11 @@ typedef struct _task_struct
     Tasks config
 */
 //====================================================
-#define NR_TASKS 2
 
 task_struct task[NR_TASKS] = 
 {
     {100, hall_timeout, 0, 0},
-    {200, energy_adc, 0, 0}
+    {60, energy_adc, 0, 0}
 };
 
 //====================================================

@@ -8,6 +8,8 @@
 #ifndef __HALL_H
 #define __HALL_H
 
+#define FIFOSIZE 8
+
 /*
     Initialize SPI communications
 */

@@ -5,9 +5,13 @@
 #ifndef __COMMANDS_H
 #define __COMMANDS_H
 
+/* ===================================== */
+
 #define CCB_NR   2
 #define CMD_NUMB 8
 #define CMD_SIZE 24
+
+/* ===================================== */
 
 /*
     Circular Command Buffer (CCB) interface

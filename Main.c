@@ -56,6 +56,7 @@ int main(void)
     bt_server();        //Make device discoverable
     
     task_enable(0);     //Enable Hall Timeout Task
+    //task_enable(1);     //Enable Energy Management Task
 
     led_set(0x00);
     

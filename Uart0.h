@@ -8,6 +8,8 @@
 #ifndef __UART0_H
 #define __UART0_H
 
+/* ===================================== */
+
 // <h> Setup Communication Speed
 
 //   <o> Baudrate 
@@ -39,6 +41,8 @@
    (UART0_BAUD_ID >= 11) ? 115200 : 115200)
 
 // </h>
+
+/* ===================================== */
 
 void init_uart0 (void);             //Initialize Serial Interface
 uint8 uart0_sendchar (uint8 ch);    //Implementation of putchar (also used by printf function to output data)

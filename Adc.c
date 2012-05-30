@@ -59,29 +59,36 @@ uint32 sample_voltage(uint8 ch)
 
 void adc_init(void)
 {
-    PINSEL1 |= (1 << 24);                      //P0.28 - AD0.1
+    PINSEL1 |= (1 << 24) | (1 << 26) | (1 << 28);  //P0.28 - AD0.1, P0.29 - AD0.2, P0.30 - AD0.3
 
-    AD0CR |= (ADC_CLKDIV << 8);                //11 clocks / 10 bits @ 3.75MHz
-    AD0INTEN |= (1 << 1);                      //Enable channel 1 interrupt
+    AD0CR |= (ADC_CLKDIV << 8);                    //11 clocks / 10 bits @ 3.75MHz
+    AD0INTEN |= (1 << 1) | (1 << 2) | (1 << 3);    //Enable channel 1, 2 and 3 interrupt
 
-    VICVectAddr5 = (uint32) ADC0isr;           //Set the ADC0 ISR vector address
-    VICVectCntl5 = 0x00000020 | 18;            //Set channel for ADC0
-    VICIntEnable |= (1 << 18);                 //Enable the interrupt ADC0
+    VICVectAddr5 = (uint32) ADC0isr;               //Set the ADC0 ISR vector address
+    VICVectCntl5 = 0x00000020 | 18;                //Set channel for ADC0
+    VICIntEnable |= (1 << 18);                     //Enable the interrupt ADC0
 
-    AD0CR |= ADC_SEL;                          //Select channel 1
-    AD0CR |= (1 << 21);                        //AD0 is operational
+    AD0CR |= (1 << 21);                            //AD0 is operational
 }
 
-void adc_start(void)
+void adc_start(uint8 ch)
 {
-    AD0CR |= (1 << 24);                        //Start conversion now
+    if (ch > ADC_NR_CHANNELS - 1) return;
+
+    AD0CR &= ~(0xFF);
+    AD0CR |= (1 << (ch + 1));
+
+    AD0CR |= (1 << 24);                            //Start conversion now
 }
 
 void ADC0isr(void)	__irq
 {
+    uint32 status;
     uint32 result;
     
-    if (AD0STAT & (1 << 1))                    //Channel 1 is Done
+    status = AD0STAT;
+
+    if (status & (1 << 1))                         //Channel 1 is Done
     {
         result = AD0DR1;
         result = (result >> 6) & 0x03FF;
@@ -89,6 +96,22 @@ void ADC0isr(void)	__irq
         sample_add(0, result);
     }
 
-    AD0CR &= ~(7 << 24);                       //Stop ADC now
-    VICVectAddr  = 0x00000000;                 //Dummy write to signal end of interrupt
+    if (status & (1 << 2))                         //Channel 2 is Done
+    {
+        result = AD0DR2;
+        result = (result >> 6) & 0x03FF;
+
+        sample_add(1, result);
+    }
+
+    if (status & (1 << 3))                         //Channel 3 is Done
+    {
+        result = AD0DR3;
+        result = (result >> 6) & 0x03FF;
+
+        sample_add(2, result);
+    }
+
+    AD0CR &= ~(7 << 24);                           //Stop ADC now
+    VICVectAddr  = 0x00000000;                     //Dummy write to signal end of interrupt
 }

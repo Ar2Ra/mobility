@@ -8,6 +8,13 @@
 #define __HALL_H
 
 /*
+    Resolution
+    1 - Hz
+    1000 - mHz
+*/
+#define HALL_RES 1
+
+/*
     Initialize timer and the 2 capture pins
 */
 void capture_init(void);

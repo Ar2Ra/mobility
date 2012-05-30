@@ -31,6 +31,7 @@ struct _ccb_struct
     id:
         0 - UART0
         1 - UART1
+        2 - SSP (SPI) //to do
 */
 ccb_struct ccb[CCB_NR];   //Command Circular Buffers
 
@@ -228,8 +229,12 @@ void debug_cmd(uint8 id, uint8 *str)
         case 0:
             fprintf(f, "[ADC] Battery: %d\r\n", adc_read_battery());
             break;
-        //case 1:
-        //case 2:
+        case 1:
+            fprintf(f, "[ADC] Motor1: %d\r\n", sample_voltage(1));
+            break;
+        case 2:
+            fprintf(f, "[ADC] Motor2: %d\r\n", sample_voltage(2));
+            break;
         default:
             fprintf(f, "[ADC] input err\r\n");
         }

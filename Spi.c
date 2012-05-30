@@ -10,8 +10,6 @@
 
 #include "Spi.h"
 
-#define FIFOSIZE 8
-
 void SSPisr(void)	__irq;
 
 void spi_init(void)
