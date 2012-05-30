@@ -4,14 +4,13 @@
     Tasks
 */
 
-//test
-
 #include <stdio.h>
 #include "Type.h"
 
 #include "Task_list.h"
 #include "Hall.h"
 #include "Adc.h"
+#include "Bluetooth.h"
 
 uint8 sample_channel = 0;
 
@@ -40,4 +39,19 @@ void energy_adc(void)
 {
     adc_start(sample_channel);
     sample_channel = (sample_channel + 1) % ADC_NR_CHANNELS;
+}
+
+void bt_broadcast(void)
+{
+    uint32 battery, motor1, motor2;
+
+    //Send only if bluetooth is connected
+    if (bt_connected())
+    {
+        battery = adc_read_battery();
+        motor1 = sample_voltage(1);
+        motor2 = sample_voltage(2);
+
+        fprintf(stderr, "%d;%d;%d\r\n", battery, motor1, motor2);
+    }
 }
