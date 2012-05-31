@@ -7,7 +7,7 @@
 #ifndef __TASK_LIST_H
 #define __TASK_LIST_H
 
-#define NR_TASKS 3
+#define NR_TASKS 4
 
 /*
     hall_timeout
@@ -34,5 +34,10 @@ void energy_adc(void);
     Broadcasts over bluetooth: battery voltage and current through the motors.
 */
 void bt_broadcast(void);
+
+/*
+    Task for debugging
+*/
+void task_debug1(void);
 
 #endif  // __TASK_LIST_H

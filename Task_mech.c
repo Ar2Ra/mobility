@@ -30,7 +30,8 @@ task_struct task[NR_TASKS] =
 {
     {100, hall_timeout, 0, 0},
     {60, energy_adc, 0, 0},
-    {1000, bt_broadcast, 0, 0}
+    {1000, bt_broadcast, 0, 0},
+    {500, task_debug1, 0, 0}
 };
 
 //====================================================

@@ -407,11 +407,6 @@
           <GroupName>Communcations</GroupName>
           <Files>
             <File>
-              <FileName>Spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Spi.c</FilePath>
-            </File>
-            <File>
               <FileName>Uart0.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart0.c</FilePath>
@@ -425,6 +420,11 @@
               <FileName>Bluetooth.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Bluetooth.c</FilePath>
+            </File>
+            <File>
+              <FileName>Ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ssp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -896,11 +896,6 @@
           <GroupName>Communcations</GroupName>
           <Files>
             <File>
-              <FileName>Spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Spi.c</FilePath>
-            </File>
-            <File>
               <FileName>Uart0.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart0.c</FilePath>
@@ -914,6 +909,11 @@
               <FileName>Bluetooth.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Bluetooth.c</FilePath>
+            </File>
+            <File>
+              <FileName>Ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ssp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1424,11 +1424,6 @@
           <GroupName>Communcations</GroupName>
           <Files>
             <File>
-              <FileName>Spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Spi.c</FilePath>
-            </File>
-            <File>
               <FileName>Uart0.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Uart0.c</FilePath>
@@ -1442,6 +1437,11 @@
               <FileName>Bluetooth.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Bluetooth.c</FilePath>
+            </File>
+            <File>
+              <FileName>Ssp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Ssp.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -11,6 +11,7 @@
 #include "Hall.h"
 #include "Adc.h"
 #include "Bluetooth.h"
+#include "Ssp.h"
 
 uint8 sample_channel = 0;
 
@@ -43,15 +44,20 @@ void energy_adc(void)
 
 void bt_broadcast(void)
 {
-    uint32 battery, motor1, motor2;
+    uint32 battery, motor1, motor2;  
 
     //Send only if bluetooth is connected
     if (bt_connected())
     {
         battery = adc_read_battery();
-        motor1 = sample_voltage(1);
-        motor2 = sample_voltage(2);
+        motor1 = adc_read_current(1);
+        motor2 = adc_read_current(2);
 
         fprintf(stderr, "%d;%d;%d\r\n", battery, motor1, motor2);
     }
+}
+
+void task_debug1(void)
+{
+    ssp_send('A');
 }

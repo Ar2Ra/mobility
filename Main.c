@@ -17,7 +17,7 @@
 #include "Pwm.h"
 #include "Hall.h"
 #include "Adc.h"
-#include "Spi.h"
+#include "Ssp.h"
 #include "Task_mech.h"
 #include "Commands.h"
 #include "Bluetooth.h"
@@ -36,17 +36,17 @@ int main(void)
         Initialize peripherals
     */
     //=======================================
-    dir_init();
+    dir_init();           //GPIO direction outputs for H-Bridge
 
-    init_uart0();
-    init_uart1();
-    //spi_init();        
+    init_uart0();         //UART0 for debugging
+    init_uart1();         //UART1 for bluetooth
+    ssp_init();           //SSP in SPI mode
 
-    pwm_init();
-    capture_init();
-    adc_init();    
-    task_init();
-    led_init();
+    pwm_init();           //PWM 2-channels driving the H-Bridge
+    capture_init();       //Capture inputs for Hall Sensors
+    adc_init();           //Analog to Digital Converters [Battery voltage & Motor currents]
+    task_init();          //Simple task mechanism [functions that execute at x miliseconds]
+    led_init();           //8 LEDs onboard MCB2140 P1.16 - P1.23
     //=======================================
 
     /*

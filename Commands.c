@@ -230,10 +230,10 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[ADC] Battery: %d\r\n", adc_read_battery());
             break;
         case 1:
-            fprintf(f, "[ADC] Motor1: %d\r\n", sample_voltage(1));
+            fprintf(f, "[ADC] Motor1: %d\r\n", adc_read_current(1));
             break;
         case 2:
-            fprintf(f, "[ADC] Motor2: %d\r\n", sample_voltage(2));
+            fprintf(f, "[ADC] Motor2: %d\r\n", adc_read_current(2));
             break;
         default:
             fprintf(f, "[ADC] input err\r\n");
