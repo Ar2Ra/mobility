@@ -7,9 +7,16 @@
 #ifndef __TASK_LIST_H
 #define __TASK_LIST_H
 
-#define NR_TASKS 6
+#define NR_TASKS 7
 
-#define TASK_SCHEDULED_STOP 4
+#define TASK_STARTUP          0
+#define TASK_SCHEDULED_STOP   5
+
+
+/*
+    This task executes only once at startup.
+*/
+void startup_task(void);
 
 /*
     This function solves the following problem:

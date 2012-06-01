@@ -53,15 +53,14 @@ int main(void)
         Default state (values)
     */
     //=======================================
-    bt_server();        //Make device discoverable
-    
-    task_enable(0);     //Enable Hall Timeout Task nr. 0
-    //task_enable(1);     //Enable ADC related Task nr. 1
-    //task_enable(2);     //Enable Bluetooth Broadcast Task nr. 2
-    //task_enable(3);     //Enable Check Battery Task nr. 3
+    task_enable(0);     //Enable Startup Task
+    task_enable(1);     //Enable Hall Timeout Task nr. 0
+    //task_enable(2);     //Enable ADC related Task nr. 1
+    //task_enable(3);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 2]
+    //task_enable(4);     //Enable Check Battery Task nr. 3 [doesnt work without task 3]
 
     led_set(0x00);
-    
+
     robot_stop();       //Initially stopped
     robot_fw();         //The default direction of the robot is forward
     //=======================================

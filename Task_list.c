@@ -19,6 +19,12 @@ uint8 sample_channel = 0;
 
 extern void led_bits(uint8 set, uint8 bit);
 
+void startup_task(void)
+{
+    bt_server();                                           //Make Bluetooth device discoverable
+    task_disable(TASK_STARTUP);
+}
+
 void hall_timeout(void)
 {
     uint8 motor_nr;

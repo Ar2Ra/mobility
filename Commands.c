@@ -77,7 +77,7 @@ void interpret(uint8 id, uint8 *cmd)
         cmd = cmd + 1;
         debug_cmd(id, cmd);
         return;
-    }    
+    }
 
     simple_cmd(cmd[0]);
 }
