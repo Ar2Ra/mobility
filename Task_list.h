@@ -9,6 +9,8 @@
 
 #define NR_TASKS 6
 
+#define TASK_SCHEDULED_STOP 4
+
 /*
     This function solves the following problem:
         if the motors are running and then they are stopped quickly, it's possible that

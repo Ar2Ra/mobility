@@ -24,16 +24,19 @@ void hall_timeout(void)
     uint8 motor_nr;
     uint32 motor_speed, motor_speed_now;
 
-    for (motor_nr = 1; motor_nr <=2; motor_nr++)
+    for (motor_nr = 1; motor_nr <=2; motor_nr++)           //For each motor do the same
     {
-        motor_speed = hall_get(motor_nr);
-        if (motor_speed > 0)
+        motor_speed = hall_get(motor_nr);                  //Get current speed
+        if (motor_speed > 0)                               //If motor isn't stopped
         {
-            motor_speed_now = hall_now(motor_nr);
+            motor_speed_now = hall_now(motor_nr);          //Compute a virtual speed based on current timer counter
     
-            if (motor_speed_now < motor_speed)
+            if (motor_speed_now < motor_speed)             //If it's lower than the measured speed then update
             {
-                //printf("%d: %d\r\n", motor_nr, motor_speed_now); 
+                //fprintf(stdout, "%d: %d\r\n", motor_nr, motor_speed_now); 
+                if (motor_speed_now < (CRITICAL_SPEED * HALL_RES))
+                    motor_speed_now = 0;
+
                 hall_update(motor_nr, motor_speed_now);
             }
         }
@@ -75,7 +78,7 @@ void check_battery(void)
 void robot_scheduled_stop(void)
 {
     robot_stop();
-    task_disable(4);
+    task_disable(TASK_SCHEDULED_STOP);
 }
 
 void task_debug1(void)

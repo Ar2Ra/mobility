@@ -15,6 +15,12 @@
 #define HALL_RES 1
 
 /*
+    The angular speed or frequency [in Hz] at which the current motor speed can be
+    considered practically 0.
+*/
+#define CRITICAL_SPEED 4
+
+/*
     Initialize timer and the 2 capture pins
 */
 void capture_init(void);

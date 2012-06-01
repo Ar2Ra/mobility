@@ -35,8 +35,12 @@ void simple_cmd(uint8 ch);
 
 /*
     All debug commands start with '_' character
-    For now, UART only (printf function)
 */
 void debug_cmd(uint8 id, uint8 *str);
+
+/*
+    All advanced commands start with '.' character
+*/
+void advanced_cmd(uint8 id, uint8 *str);
 
 #endif  // __COMMANDS_H

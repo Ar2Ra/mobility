@@ -8,6 +8,7 @@
 
 #include "Commands.h"
 #include "Task_mech.h"
+#include "Task_list.h"
 #include "Pwm.h"
 #include "Hall.h"
 #include "Adc.h"
@@ -64,12 +65,19 @@ void interpret(uint8 id, uint8 *cmd)
         }
     }
 
+    if (cmd[0] == '.')              //advanced command
+    {
+        cmd = cmd + 1;
+        advanced_cmd(id, cmd);
+        return;
+    }
+
     if (cmd[0] == '_')              //debug command
     {
         cmd = cmd + 1;
         debug_cmd(id, cmd);
         return;
-    }  
+    }    
 
     simple_cmd(cmd[0]);
 }
@@ -130,6 +138,28 @@ void simple_cmd(uint8 ch)
     }
 }
 
+void advanced_cmd(uint8 id, uint8 *str)
+{
+    uint8 i;
+    uint32 period;
+
+    FILE *f;
+    f = (id == 0) ? stdout : stderr;
+
+    if (str[0] == 's')
+    {
+        period = 0;
+        
+        for (i = 1; str[i] != '\0'; i++)
+            period = (period * 10) + (str[i] - '0');
+
+        task_set_period(TASK_SCHEDULED_STOP, period);
+        task_enable(TASK_SCHEDULED_STOP);
+
+        fprintf(f, "[ADV] Scheduled stop %d\r\n", period);
+    }
+}
+
 void debug_cmd(uint8 id, uint8 *str)
 {
     uint8 i;
@@ -179,7 +209,7 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[DIR] motor: %d dir: %d\r\n", motor, dir);
     }
 
-    if (str[0] == 'm') //Motor status
+    if (str[0] == 'm')  //Motor status
     {
         motor = str[1] - '0';
         if (motor < 1 || motor > 2)
@@ -200,7 +230,7 @@ void debug_cmd(uint8 id, uint8 *str)
         fprintf(f, "[COMPILED] %s - %s\r\n", CompileDate, CompileTime );
     }
     
-    if (str[0] == 't') //Task configuration
+    if (str[0] == 't')  //Task configuration
     {
         nr = str[1] - '0';
         
@@ -226,7 +256,7 @@ void debug_cmd(uint8 id, uint8 *str)
         fprintf(f, "[TASK] %d state: %d\r\n", nr, state);
     }
 
-    if (str[0] == 'a') //ADC
+    if (str[0] == 'a')  //ADC
     {
         nr = str[1] - '0';       
 
@@ -246,7 +276,7 @@ void debug_cmd(uint8 id, uint8 *str)
         }
     }
 
-    if (str[0] == 'b') //Bluetooth
+    if (str[0] == 'b')  //Bluetooth
     {
         //Redirect Bluetooth AT commands directly from UART0 to UART1
         if ( (str[1] == '_')  && (f == stdout) )

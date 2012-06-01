@@ -6,7 +6,6 @@
 
 #include <LPC214x.H>
 #include <stdio.h>
-
 #include "Type.h"
 
 #include "Ssp.h"
