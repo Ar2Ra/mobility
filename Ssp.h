@@ -1,6 +1,5 @@
 /*
     Spi mode - SSP (Synchronous Serial Port)
-    Slave mode
 
     Ssp.h
 */
@@ -9,6 +8,11 @@
 #define __SSP_H
 
 #define FIFOSIZE 8
+
+/*
+    SSP should be in slave mode, but for testing purposes it is configured
+    in master loopback mode.
+*/
 
 /*
     Initialize SSP communications

@@ -1,6 +1,5 @@
 /*
     Spi mode - SSP (Synchronous Serial Port)
-    Slave mode
 
     Ssp.c
 */

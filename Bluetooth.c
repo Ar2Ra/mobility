@@ -31,13 +31,13 @@ void bt_command(uint8 *cmd)
 
     if (strstr((const char *) cmd, "CONNECT"))
     {
-        led_bits(1, 0);
+        led_bits(1, 0); //set led0
         connected = 1;
     }
     
     if (strstr((const char *) cmd, "DISCONNECT"))
     {
-        led_bits(0, 0);
+        led_bits(0, 0); //clear led0
         connected = 0;
     }
 }

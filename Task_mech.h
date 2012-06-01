@@ -32,4 +32,9 @@ int32 task_disable(uint8 nr);
 */
 int32 task_set_period(uint8 nr, uint32 period);
 
+/*
+    Returns 1 if task is activated and 0 otherwise
+*/
+uint8 task_get_status(uint8 nr);
+
 #endif  // __TASK_MECH_H

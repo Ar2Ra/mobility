@@ -3,7 +3,7 @@ LED indicators
 Led number:
 
     0 - Bluetooth is connected
-    1 -
+    1 - Low battery voltage
     2 -
     3 -
     4 -

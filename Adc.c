@@ -38,6 +38,16 @@ uint32 adc_read_battery(void)
     return (sample_voltage(0) * ADC_BAT_DIV);
 }
 
+uint8 adc_low_battery(void)
+{
+    uint32 v_bat;
+
+    v_bat = adc_read_battery();
+    if (v_bat < ADC_LOW_BAT) return 1;
+
+    return 0;
+}
+
 uint32 adc_read_current(uint8 motor)
 {
     uint32 voltage;

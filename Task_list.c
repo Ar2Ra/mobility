@@ -8,12 +8,16 @@
 #include "Type.h"
 
 #include "Task_list.h"
+#include "Task_mech.h"
 #include "Hall.h"
 #include "Adc.h"
+#include "Pwm.h"
 #include "Bluetooth.h"
 #include "Ssp.h"
 
 uint8 sample_channel = 0;
+
+extern void led_bits(uint8 set, uint8 bit);
 
 void hall_timeout(void)
 {
@@ -38,7 +42,10 @@ void hall_timeout(void)
 
 void energy_adc(void)
 {
+    //start conversion on current sample channel
     adc_start(sample_channel);
+
+    //change the sample channel for future task executions
     sample_channel = (sample_channel + 1) % ADC_NR_CHANNELS;
 }
 
@@ -55,6 +62,20 @@ void bt_broadcast(void)
 
         fprintf(stderr, "%d;%d;%d\r\n", battery, motor1, motor2);
     }
+}
+
+void check_battery(void)
+{
+    if (adc_low_battery())
+        led_bits(1, 1); //set led1
+    else
+        led_bits(0, 1); //clear led1
+}
+
+void robot_scheduled_stop(void)
+{
+    robot_stop();
+    task_disable(4);
 }
 
 void task_debug1(void)

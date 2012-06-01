@@ -214,6 +214,12 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[TASK] %d period: %d\r\n", nr, period);
             return;
         }
+        
+        if (str[2] == 's') //Get status (if enabled or not)
+        {
+            fprintf(f, "[TASK] %d enabled: %d\r\n", nr, task_get_status(nr));
+            return;
+        }
 
         state = str[2] - '0';
         task_config(nr, state);

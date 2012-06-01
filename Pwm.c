@@ -61,30 +61,13 @@ int32 pwm_set_raw(uint8 motor, uint32 val)
 
 int32 pwm_set_percent(uint8 motor, uint8 percent)
 {
-    static uint32 val;
+    uint32 val;
 
     if (percent > 100) return -1;
 
     val = PWM_M0 * ( (float) percent / 100.0 );
 
-    switch (motor)
-    {
-        case 1:                         //Set channel 1 only
-            PWMMR2 = val;
-            break;
-        case 2:                         //Set channel 2 only
-            PWMMR5 = val;
-            break;
-        case 3:                         //Set both channels
-            PWMMR2 = val;
-            PWMMR5 = val;
-            break;
-        default:
-            return -2;           
-    }
-
-    PWMLER |= (1 << 2) | (1 << 5);      //Latch enable Match2 & Match5
-    return 0;                           //SUCCESS
+    return (pwm_set_raw(motor, val));
 }
 
 uint32 pwm_get_raw(uint8 motor)

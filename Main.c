@@ -43,9 +43,9 @@ int main(void)
     ssp_init();           //SSP in SPI mode
 
     pwm_init();           //PWM 2-channels driving the H-Bridge
-    capture_init();       //Capture inputs for Hall Sensors
+    capture_init();       //Capture inputs for Hall Sensors [Timer 1]
     adc_init();           //Analog to Digital Converters [Battery voltage & Motor currents]
-    task_init();          //Simple task mechanism [functions that execute at x miliseconds]
+    task_init();          //Simple task mechanism [functions that execute at x miliseconds] [Timer0]
     led_init();           //8 LEDs onboard MCB2140 P1.16 - P1.23
     //=======================================
 
@@ -55,8 +55,10 @@ int main(void)
     //=======================================
     bt_server();        //Make device discoverable
     
-    task_enable(0);     //Enable Hall Timeout Task
-    //task_enable(1);     //Enable Energy Management Task
+    task_enable(0);     //Enable Hall Timeout Task nr. 0
+    //task_enable(1);     //Enable ADC related Task nr. 1
+    //task_enable(2);     //Enable Bluetooth Broadcast Task nr. 2
+    //task_enable(3);     //Enable Check Battery Task nr. 3
 
     led_set(0x00);
     
