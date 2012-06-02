@@ -21,6 +21,16 @@
 #define CRITICAL_SPEED 4
 
 /*
+    Two sensors - one for each motor
+*/
+#define HALL_NR_SENSORS   2
+
+/*
+    How many samples for one filter
+*/
+#define HALL_NR_SAMPLES  20
+
+/*
     Initialize timer and the 2 capture pins
 */
 void capture_init(void);
@@ -49,5 +59,11 @@ void hall_reset(uint8 motor);
     motor (1, 2)
 */
 uint32 hall_now(uint8 motor);
+
+/*
+    Functions for Hall filters - sample averaging of motor speed
+*/
+void hall_filter_add(uint8 ch, uint32 sample);
+uint32 hall_filter_get(uint8 ch);
 
 #endif  // __HALL_H

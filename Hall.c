@@ -14,6 +14,38 @@ uint32 last_capture2 = 0, signal_freq2 = 0;
 
 void T1isr(void)    __irq;
 
+typedef struct _hall_struct hall_struct;
+
+struct _hall_struct
+{
+    uint32 buffer[HALL_NR_SAMPLES];
+    uint16 counter;
+};
+
+hall_struct hall_filter[HALL_NR_SENSORS];
+
+void hall_filter_add(uint8 ch, uint32 sample)
+{
+    uint16 pos;
+    pos = hall_filter[ch].counter;
+
+    hall_filter[ch].buffer[pos] = sample;
+    pos = (pos + 1) % HALL_NR_SAMPLES;
+
+    hall_filter[ch].counter = pos;
+}
+
+uint32 hall_filter_get(uint8 ch)
+{
+    uint16 i;
+    uint32 sum = 0;
+
+    for (i = 0; i < HALL_NR_SAMPLES; i++)
+        sum += hall_filter[ch].buffer[i];
+
+    return (sum / HALL_NR_SAMPLES);
+}
+
 void capture_init(void)
 {
     PINSEL0 |= (1 << 21);               //Capture 1.0 (Timer 1) P0.10

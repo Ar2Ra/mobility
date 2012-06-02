@@ -195,7 +195,8 @@ void debug_cmd(uint8 id, uint8 *str)
             return;
         }
 
-        fprintf(f, "[HALL %d] PWM - %d Freq - %d\r\n", motor, pwm_get_raw(motor), hall_get(motor));
+        fprintf(f, "[HALL %d] PWM - %d Avg - %d Freq - %d\r\n",
+            motor, pwm_get_raw(motor), hall_filter_get(motor - 1), hall_get(motor));
     }
 
     if (str[0] == 'd')  //Set direction

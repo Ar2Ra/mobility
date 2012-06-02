@@ -58,6 +58,8 @@ int main(void)
     //task_enable(2);     //Enable ADC related Task nr. 1
     //task_enable(3);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 2]
     //task_enable(4);     //Enable Check Battery Task nr. 3 [doesnt work without task 3]
+    
+    //task_enable(6);     //Enable Debug Task 1
 
     led_set(0x00);
 

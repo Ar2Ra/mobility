@@ -37,7 +37,7 @@ void pwm_init(void)
 
 int32 pwm_set_raw(uint8 motor, uint32 val)
 {
-    if (val > PWM_M0) return -1;
+    if (val > PWM_M0) val = PWM_M0;
 
     switch (motor)
     {
@@ -52,7 +52,7 @@ int32 pwm_set_raw(uint8 motor, uint32 val)
             PWMMR5 = val;
             break;
         default:
-            return -2;
+            return -1;
     }
 
     PWMLER |= (1 << 2) | (1 << 5);      //Latch enable Match2 & Match5
@@ -63,7 +63,7 @@ int32 pwm_set_percent(uint8 motor, uint8 percent)
 {
     uint32 val;
 
-    if (percent > 100) return -1;
+    if (percent > 100) percent = 100;
 
     val = PWM_M0 * ( (float) percent / 100.0 );
 

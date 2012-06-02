@@ -33,6 +33,8 @@ void hall_timeout(void)
     for (motor_nr = 1; motor_nr <=2; motor_nr++)           //For each motor do the same
     {
         motor_speed = hall_get(motor_nr);                  //Get current speed
+        hall_filter_add(motor_nr - 1, motor_speed);
+        
         if (motor_speed > 0)                               //If motor isn't stopped
         {
             motor_speed_now = hall_now(motor_nr);          //Compute a virtual speed based on current timer counter
@@ -89,5 +91,8 @@ void robot_scheduled_stop(void)
 
 void task_debug1(void)
 {
-    ssp_send('A');
+    if (bt_connected())
+    {
+        fprintf(stderr, "%d\n", hall_filter_get(1));
+    }
 }
