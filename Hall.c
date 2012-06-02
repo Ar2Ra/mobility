@@ -9,6 +9,8 @@
 
 #include "Hall.h"
 
+uint32 hall_res;
+
 uint32 last_capture1 = 0, signal_freq1 = 0;
 uint32 last_capture2 = 0, signal_freq2 = 0;
 
@@ -23,6 +25,16 @@ struct _hall_struct
 };
 
 hall_struct hall_filter[HALL_NR_SENSORS];
+
+uint32 hall_get_res(void)
+{
+    return hall_res;
+}
+
+void hall_set_res(uint32 res)
+{
+    hall_res = res;
+}
 
 void hall_filter_add(uint8 ch, uint32 sample)
 {
@@ -98,7 +110,7 @@ uint32 compute_freq(uint32 current, uint32 last)
     uint32 den;
     den = current - last;
 
-    return (1000000 * HALL_RES / den);
+    return (1000000 * hall_get_res() / den);
 }
 
 uint32 hall_now(uint8 motor)

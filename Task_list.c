@@ -14,6 +14,7 @@
 #include "Pwm.h"
 #include "Bluetooth.h"
 #include "Ssp.h"
+#include "Pid.h"
 
 uint8 sample_channel = 0;
 
@@ -42,12 +43,27 @@ void hall_timeout(void)
             if (motor_speed_now < motor_speed)             //If it's lower than the measured speed then update
             {
                 //fprintf(stdout, "%d: %d\r\n", motor_nr, motor_speed_now); 
-                if (motor_speed_now < (CRITICAL_SPEED * HALL_RES))
+                if (motor_speed_now < (CRITICAL_SPEED * hall_get_res()))
                     motor_speed_now = 0;
 
                 hall_update(motor_nr, motor_speed_now);
             }
         }
+    }
+}
+
+void PID_task(void)
+{
+    uint8 i;
+    int32 plantCommand;
+    int32 readVal;
+
+    for (i = 0; i < PID_NR; i++)
+    {
+        readVal = hall_get(i + 1);
+        plantCommand = pid_execute(i, readVal);
+               
+        pwm_set_raw(i + 1, plantCommand);
     }
 }
 
@@ -93,6 +109,6 @@ void task_debug1(void)
 {
     if (bt_connected())
     {
-        fprintf(stderr, "%d\n", hall_filter_get(1));
+        fprintf(stderr, "%d\n", hall_get(2));
     }
 }

@@ -7,10 +7,10 @@
 #ifndef __TASK_LIST_H
 #define __TASK_LIST_H
 
-#define NR_TASKS 7
+#define NR_TASKS 8
 
 #define TASK_STARTUP          0
-#define TASK_SCHEDULED_STOP   5
+#define TASK_SCHEDULED_STOP   6
 
 
 /*
@@ -25,6 +25,11 @@ void startup_task(void);
         [because no more timer capture interrupts are generated to update the motor speed]
 */
 void hall_timeout(void);
+
+/*
+    Digital control system task
+*/
+void PID_task(void);
 
 /*
     This function starts an ADC conversion on one of the three channels

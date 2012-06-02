@@ -8,13 +8,6 @@
 #define __HALL_H
 
 /*
-    Resolution
-    1 - Hz
-    1000 - mHz
-*/
-#define HALL_RES 1
-
-/*
     The angular speed or frequency [in Hz] at which the current motor speed can be
     considered practically 0.
 */
@@ -29,6 +22,14 @@
     How many samples for one filter
 */
 #define HALL_NR_SAMPLES  20
+
+/*
+    Resolution
+    1 - Hz
+    1000 - mHz
+*/
+uint32 hall_get_res(void);
+void hall_set_res(uint32 res);
 
 /*
     Initialize timer and the 2 capture pins

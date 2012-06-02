@@ -21,6 +21,7 @@
 #include "Task_mech.h"
 #include "Commands.h"
 #include "Bluetooth.h"
+#include "Pid.h"
 
 //=============================================
 void delay(uint32 cnt);
@@ -47,6 +48,9 @@ int main(void)
     adc_init();           //Analog to Digital Converters [Battery voltage & Motor currents]
     task_init();          //Simple task mechanism [functions that execute at x miliseconds] [Timer0]
     led_init();           //8 LEDs onboard MCB2140 P1.16 - P1.23
+    
+    hall_set_res(10);      //Hall resolution [Hz * res]
+    pid_init();           //Initialize PID for both motors
     //=======================================
 
     /*
@@ -55,13 +59,14 @@ int main(void)
     //=======================================
     task_enable(0);     //Enable Startup Task
     task_enable(1);     //Enable Hall Timeout Task nr. 0
-    //task_enable(2);     //Enable ADC related Task nr. 1
-    //task_enable(3);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 2]
-    //task_enable(4);     //Enable Check Battery Task nr. 3 [doesnt work without task 3]
-    
-    //task_enable(6);     //Enable Debug Task 1
+    //task_enable(2);     //Enable PID
+    //task_enable(3);     //Enable ADC related Task nr. 1
+    //task_enable(4);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 2]
+    //task_enable(5);     //Enable Check Battery Task nr. 3 [doesnt work without task 2]
+                                                                                       
+    //task_enable(7);     //Enable Debug Task 1
 
-    led_set(0x00);
+    led_set(0x00);      //All LEDs are off
 
     robot_stop();       //Initially stopped
     robot_fw();         //The default direction of the robot is forward

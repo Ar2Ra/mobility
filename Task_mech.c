@@ -29,8 +29,9 @@ typedef struct _task_struct
 task_struct task[NR_TASKS] = 
 {
     {1000, startup_task, 0, 0},
-    {50, hall_timeout, 0, 0},
-    
+    {40, hall_timeout, 0, 0},
+    {80, PID_task, 0, 0},    
+
     {60, energy_adc, 0, 0},
     {1000, bt_broadcast, 0, 0},
     {5000, check_battery, 0, 0},
@@ -46,6 +47,8 @@ int32 task_config(uint8 nr, uint8 state)
 {
     if (nr < NR_TASKS)
     {
+        if (state > 1) return -2;
+
         task[nr].enable = state;
         if (task[nr].enable == 0) task[nr].counter = 0;
         return 0;

@@ -26,7 +26,7 @@ void pwm_init(void);
     return value is negative if error
 */
 int32 pwm_set_percent(uint8 motor, uint8 percent);
-int32 pwm_set_raw(uint8 motor, uint32 val);
+int32 pwm_set_raw(uint8 motor, int32 val);
 
 /*
     Get duty cycle in percentage [0-100]% or in raw values

@@ -35,8 +35,9 @@ void pwm_init(void)
     PWMLER = 0;                                   //isis
 }
 
-int32 pwm_set_raw(uint8 motor, uint32 val)
+int32 pwm_set_raw(uint8 motor, int32 val)
 {
+    if (val < 0) val = 0;
     if (val > PWM_M0) val = PWM_M0;
 
     switch (motor)

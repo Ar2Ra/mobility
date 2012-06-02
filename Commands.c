@@ -13,6 +13,7 @@
 #include "Hall.h"
 #include "Adc.h"
 #include "Bluetooth.h"
+#include "Pid.h"
 
 char *CompileTime = __TIME__;
 char *CompileDate = __DATE__;
@@ -140,13 +141,13 @@ void simple_cmd(uint8 ch)
 
 void advanced_cmd(uint8 id, uint8 *str)
 {
-    uint8 i;
-    uint32 period;
+    uint8 i, nr;
+    uint32 period, data;
 
     FILE *f;
     f = (id == 0) ? stdout : stderr;
 
-    if (str[0] == 's')
+    if (str[0] == 's') //Scheduled stop
     {
         period = 0;
         
@@ -157,6 +158,55 @@ void advanced_cmd(uint8 id, uint8 *str)
         task_enable(TASK_SCHEDULED_STOP);
 
         fprintf(f, "[ADV] Scheduled stop %d\r\n", period);
+    }
+
+    if (str[0] == 'p') //PID
+    {
+        nr = str[1] - '0';
+
+        if (str[2] == 'r')  //reset
+        {
+            pid_reset(nr);
+            fprintf(f, "(PID) %d reset\r\n", nr);
+            
+            return;
+        }
+        
+        data = 0;
+        for (i = 3; str[i] != '\0'; i++)
+            data = (data * 10) + (str[i] - '0');
+
+        if (str[2] == 't') //target
+        {           
+            pid_set_target(nr, data * hall_get_res());
+            fprintf(f, "(PID) %d target %d\r\n", nr, data * hall_get_res());
+
+            return;
+        }
+
+        if (str[2] == 'p') //proportional
+        {           
+            pid_set_gain(nr, data, -1, -1);
+            fprintf(f, "(PID) %d pGain %d\r\n", nr, data);
+
+            return;
+        }
+
+        if (str[2] == 'i') //integrator
+        {           
+            pid_set_gain(nr, -1, data, -1);
+            fprintf(f, "(PID) %d iGain %d\r\n", nr, data);
+
+            return;
+        }
+
+        if (str[2] == 'd') //derivator
+        {           
+            pid_set_gain(nr, -1, -1, data);
+            fprintf(f, "(PID) %d dGain %d\r\n", nr, data);
+
+            return;
+        }
     }
 }
 
@@ -188,12 +238,23 @@ void debug_cmd(uint8 id, uint8 *str)
     
     if (str[0] == 'f')  //Read frequency [capture signals]
     {
+        if (str[1] == 'r') //resolution
+        {
+            data = 0;
+            for (i = 2; str[i] != '\0'; i++)
+                data = (data * 10) + (str[i] - '0');
+
+            hall_set_res(data);
+            fprintf(f, "[HALL] res - %d\r\n", data);
+            return;
+        }
+
         motor = str[1] - '0';
         if (motor < 1 || motor > 2)
         {
             fprintf(f, "[HALL] input err\r\n");
             return;
-        }
+        }      
 
         fprintf(f, "[HALL %d] PWM - %d Avg - %d Freq - %d\r\n",
             motor, pwm_get_raw(motor), hall_filter_get(motor - 1), hall_get(motor));
@@ -253,8 +314,11 @@ void debug_cmd(uint8 id, uint8 *str)
         }
 
         state = str[2] - '0';
-        task_config(nr, state);
-        fprintf(f, "[TASK] %d state: %d\r\n", nr, state);
+        
+        if ( task_config(nr, state) < 0 )
+            fprintf(f, "[TASK] input err\r\n");
+        else
+            fprintf(f, "[TASK] %d state: %d\r\n", nr, state);
     }
 
     if (str[0] == 'a')  //ADC
@@ -285,7 +349,7 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(stderr, "%s\r", str + 2);
             return;
         }
-        
+
         //If only "_b" command was issued, then print out connection status
         fprintf(f, "[BT] Connected: %d\r\n", bt_connected());
     }
