@@ -49,7 +49,7 @@ int main(void)
     task_init();          //Simple task mechanism [functions that execute at x miliseconds] [Timer0]
     led_init();           //8 LEDs onboard MCB2140 P1.16 - P1.23
     
-    hall_set_res(10);      //Hall resolution [Hz * res]
+    hall_set_res(1);      //Hall resolution [Hz * res] Hz, dHz, cHz, mHz
     pid_init();           //Initialize PID for both motors
     //=======================================
 
@@ -58,11 +58,13 @@ int main(void)
     */
     //=======================================
     task_enable(0);     //Enable Startup Task
+    //bt_set_connected();
+    
     task_enable(1);     //Enable Hall Timeout Task nr. 0
     //task_enable(2);     //Enable PID
-    //task_enable(3);     //Enable ADC related Task nr. 1
-    //task_enable(4);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 2]
-    //task_enable(5);     //Enable Check Battery Task nr. 3 [doesnt work without task 2]
+    //task_enable(3);     //Enable ADC conversion initiation Task nr. 1
+    //task_enable(4);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 3]
+    //task_enable(5);     //Enable Check Battery Task nr. 3 [doesnt work without task 3]
                                                                                        
     //task_enable(7);     //Enable Debug Task 1
 
@@ -70,6 +72,13 @@ int main(void)
 
     robot_stop();       //Initially stopped
     robot_fw();         //The default direction of the robot is forward
+    //=======================================
+
+    /*
+        PID Configuration
+    */
+    //pid_set_gain(0, 5, 1, 0);    
+    pid_set_gain(1, 5, 1, 0);
     //=======================================
 
     while (1) 

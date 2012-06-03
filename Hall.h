@@ -11,7 +11,7 @@
     The angular speed or frequency [in Hz] at which the current motor speed can be
     considered practically 0.
 */
-#define CRITICAL_SPEED 4
+#define CRITICAL_SPEED 5
 
 /*
     Two sensors - one for each motor
@@ -21,7 +21,15 @@
 /*
     How many samples for one filter
 */
-#define HALL_NR_SAMPLES  20
+#define HALL_NR_SAMPLES  10
+
+/*
+    Functions for Hall filters - sample averaging of motor speed
+    0 - Motor 1
+    1 - Motor 2
+*/
+void hall_filter_add(uint8 ch, uint32 sample);
+uint32 hall_filter_get(uint8 ch);
 
 /*
     Resolution
@@ -60,11 +68,5 @@ void hall_reset(uint8 motor);
     motor (1, 2)
 */
 uint32 hall_now(uint8 motor);
-
-/*
-    Functions for Hall filters - sample averaging of motor speed
-*/
-void hall_filter_add(uint8 ch, uint32 sample);
-uint32 hall_filter_get(uint8 ch);
 
 #endif  // __HALL_H

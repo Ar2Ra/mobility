@@ -6,22 +6,23 @@
 
 #include "Type.h"
 #include "Pid.h"
+#include "Hall.h"
 
 typedef struct _pid_struct pid_struct;
 
 struct _pid_struct
 {
-    int32 pGain;        //Proportional Gain
-    int32 iGain;        //Integral Gain
-    int32 dGain;        //Derivative Gain
+    pid_type pGain;        //Proportional Gain
+    pid_type iGain;        //Integral Gain
+    pid_type dGain;        //Derivative Gain
 
-    int32 iMin;         //Minimum allowable integrator state
-    int32 iMax;         //Maximum allowable integrator state
+    pid_type iMin;         //Minimum allowable integrator state
+    pid_type iMax;         //Maximum allowable integrator state
 
-    int32 iState;       //Integrator State
-    int32 dState;       //Last value input
+    pid_type iState;       //Integrator State
+    pid_type dState;       //Last value input
 
-    int32 target;
+    pid_type target;       //Command value
 };
 
 pid_struct pid[PID_NR];
@@ -37,9 +38,10 @@ void pid_init(void)
     }
 }
 
-int32 pid_execute(uint8 nr, int32 readVal)
+pid_type pid_execute(uint8 nr, pid_type readVal)
 {
-    int32 pTerm, iTerm, dTerm, _error;
+    pid_type pTerm, iTerm, dTerm, _error;
+    
     if (nr > PID_NR - 1) return -1;
 
     _error = pid[nr].target - readVal;             //Compute error
@@ -73,15 +75,20 @@ int32 pid_reset(uint8 nr)
     return 0;
 }
 
-int32 pid_set_target(uint8 nr, int32 target)
+int32 pid_set_target(uint8 nr, pid_type target)
 {
     if (nr > PID_NR - 1) return -1;
 
-    pid[nr].target = target;
+    if (target < CRITICAL_SPEED * hall_get_res())
+    {
+        pid_reset(nr);
+    }
+
+    pid[nr].target = target * hall_get_res();
     return 0;
 }
 
-int32 pid_set_gain(uint8 nr, int32 pGain, int32 iGain, int32 dGain)
+int32 pid_set_gain(uint8 nr, pid_type pGain, pid_type iGain, pid_type dGain)
 {
     if (nr > PID_NR - 1) return -1;
 

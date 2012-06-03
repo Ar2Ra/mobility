@@ -26,16 +26,7 @@ struct _hall_struct
 
 hall_struct hall_filter[HALL_NR_SENSORS];
 
-uint32 hall_get_res(void)
-{
-    return hall_res;
-}
-
-void hall_set_res(uint32 res)
-{
-    hall_res = res;
-}
-
+//ch 0 or 1
 void hall_filter_add(uint8 ch, uint32 sample)
 {
     uint16 pos;
@@ -47,6 +38,7 @@ void hall_filter_add(uint8 ch, uint32 sample)
     hall_filter[ch].counter = pos;
 }
 
+//ch 0 or 1
 uint32 hall_filter_get(uint8 ch)
 {
     uint16 i;
@@ -56,6 +48,16 @@ uint32 hall_filter_get(uint8 ch)
         sum += hall_filter[ch].buffer[i];
 
     return (sum / HALL_NR_SAMPLES);
+}
+
+uint32 hall_get_res(void)
+{
+    return hall_res;
+}
+
+void hall_set_res(uint32 res)
+{
+    hall_res = res;
 }
 
 void capture_init(void)

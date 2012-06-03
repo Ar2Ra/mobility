@@ -80,7 +80,7 @@ void interpret(uint8 id, uint8 *cmd)
         return;
     }
 
-    simple_cmd(cmd[0]);
+    simple_cmd(cmd[0]);             //simple command
 }
 
 int32 exec_cmd(uint8 id)
@@ -142,7 +142,9 @@ void simple_cmd(uint8 ch)
 void advanced_cmd(uint8 id, uint8 *str)
 {
     uint8 i, nr;
-    uint32 period, data;
+    uint32 period, target;
+
+    pid_type pGain, iGain, dGain;
 
     FILE *f;
     f = (id == 0) ? stdout : stderr;
@@ -158,6 +160,8 @@ void advanced_cmd(uint8 id, uint8 *str)
         task_enable(TASK_SCHEDULED_STOP);
 
         fprintf(f, "[ADV] Scheduled stop %d\r\n", period);
+
+        return;
     }
 
     if (str[0] == 'p') //PID
@@ -170,40 +174,38 @@ void advanced_cmd(uint8 id, uint8 *str)
             fprintf(f, "(PID) %d reset\r\n", nr);
             
             return;
-        }
-        
-        data = 0;
-        for (i = 3; str[i] != '\0'; i++)
-            data = (data * 10) + (str[i] - '0');
+        }      
 
         if (str[2] == 't') //target
-        {           
-            pid_set_target(nr, data * hall_get_res());
-            fprintf(f, "(PID) %d target %d\r\n", nr, data * hall_get_res());
+        {
+            target = 0;
+            for (i = 3; str[i] != '\0'; i++)
+                target = (target * 10) + (str[i] - '0');
+            
+            if (nr == 1) fprintf(stderr, "-10\n");
+            pid_set_target(nr, target * hall_get_res());
+            fprintf(f, "(PID) %d target %d\r\n", nr, target * hall_get_res());
 
             return;
         }
 
-        if (str[2] == 'p') //proportional
-        {           
-            pid_set_gain(nr, data, -1, -1);
-            fprintf(f, "(PID) %d pGain %d\r\n", nr, data);
-
-            return;
-        }
-
-        if (str[2] == 'i') //integrator
-        {           
-            pid_set_gain(nr, -1, data, -1);
-            fprintf(f, "(PID) %d iGain %d\r\n", nr, data);
-
-            return;
-        }
-
-        if (str[2] == 'd') //derivator
-        {           
-            pid_set_gain(nr, -1, -1, data);
-            fprintf(f, "(PID) %d dGain %d\r\n", nr, data);
+        if (str[2] == 'p') //gain
+        {
+            #if (PID_INT == 1)
+            
+            sscanf((const char *) str, "p%dp%di%dd%d", 
+                (int *) &nr, (int *) &pGain, (int *) &iGain, (int *) &dGain);
+            fprintf(f, "(PID) %d pGain: %d iGain: %d dGain: %d\r\n", nr, pGain, iGain, dGain);
+            
+            #else
+            
+            sscanf((const char *) str, "p%dp%fi%fd%f", 
+                (int *) &nr, (float *) &pGain, (float *) &iGain, (float *) &dGain);
+            fprintf(f, "(PID) %d pGain: %.3f iGain: %.3f dGain: %.3f\r\n", nr, pGain, iGain, dGain);
+            
+            #endif
+            
+            pid_set_gain(nr, pGain, iGain, dGain);                       
 
             return;
         }
@@ -234,6 +236,8 @@ void debug_cmd(uint8 id, uint8 *str)
            fprintf(f, "[PWM] input err\r\n");
        else
            fprintf(f, "[PWM] %d set %d\r\n", motor, percent);
+
+       return;
     }
     
     if (str[0] == 'f')  //Read frequency [capture signals]
@@ -245,7 +249,7 @@ void debug_cmd(uint8 id, uint8 *str)
                 data = (data * 10) + (str[i] - '0');
 
             hall_set_res(data);
-            fprintf(f, "[HALL] res - %d\r\n", data);
+            fprintf(f, "[HALL] res: %d\r\n", data);
             return;
         }
 
@@ -256,8 +260,10 @@ void debug_cmd(uint8 id, uint8 *str)
             return;
         }      
 
-        fprintf(f, "[HALL %d] PWM - %d Avg - %d Freq - %d\r\n",
+        fprintf(f, "[HALL %d] PWM: %d Avg: %d Freq: %d\r\n",
             motor, pwm_get_raw(motor), hall_filter_get(motor - 1), hall_get(motor));
+
+        return;
     }
 
     if (str[0] == 'd')  //Set direction
@@ -269,6 +275,8 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[DIR] input err\r\n");
         else
             fprintf(f, "[DIR] motor: %d dir: %d\r\n", motor, dir);
+
+        return;
     }
 
     if (str[0] == 'm')  //Motor status
@@ -284,12 +292,16 @@ void debug_cmd(uint8 id, uint8 *str)
         percent = pwm_get_percent(motor);
         dir = dir_get(motor);
 
-        fprintf(f, "[MOTOR %d] PWM - %d (%d%%) DIR - %d\r\n", motor, data, percent, dir);
+        fprintf(f, "[MOTOR %d] PWM: %d (%d%%) DIR: %d\r\n", motor, data, percent, dir);
+
+        return;
     }
 
     if (str[0] == 'v')  //Get compile time
     {
         fprintf(f, "[COMPILED] %s - %s\r\n", CompileDate, CompileTime );
+
+        return;
     }
     
     if (str[0] == 't')  //Task configuration
@@ -319,6 +331,8 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[TASK] input err\r\n");
         else
             fprintf(f, "[TASK] %d state: %d\r\n", nr, state);
+
+        return;
     }
 
     if (str[0] == 'a')  //ADC
@@ -339,6 +353,8 @@ void debug_cmd(uint8 id, uint8 *str)
         default:
             fprintf(f, "[ADC] input err\r\n");
         }
+
+        return;
     }
 
     if (str[0] == 'b')  //Bluetooth
@@ -352,5 +368,7 @@ void debug_cmd(uint8 id, uint8 *str)
 
         //If only "_b" command was issued, then print out connection status
         fprintf(f, "[BT] Connected: %d\r\n", bt_connected());
+
+        return;
     }
 }

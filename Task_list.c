@@ -55,8 +55,9 @@ void hall_timeout(void)
 void PID_task(void)
 {
     uint8 i;
-    int32 plantCommand;
     int32 readVal;
+    
+    pid_type plantCommand;  
 
     for (i = 0; i < PID_NR; i++)
     {
@@ -105,6 +106,7 @@ void robot_scheduled_stop(void)
     task_disable(TASK_SCHEDULED_STOP);
 }
 
+//Matlab?
 void task_debug1(void)
 {
     if (bt_connected())

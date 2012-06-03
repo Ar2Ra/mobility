@@ -24,6 +24,11 @@ uint8 bt_connected(void)
     return connected;
 }
 
+void bt_set_connected(void)
+{
+    connected = 1;
+}
+
 void bt_command(uint8 *cmd)
 {
     if (BT_ECHO) //Echo all bluetooth commands on UART0
