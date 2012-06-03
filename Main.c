@@ -77,7 +77,7 @@ int main(void)
     /*
         PID Configuration
     */
-    //pid_set_gain(0, 5, 1, 0);    
+    pid_set_gain(0, 5, 1, 0);    
     pid_set_gain(1, 5, 1, 0);
     //=======================================
 
