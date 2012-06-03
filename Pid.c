@@ -65,6 +65,13 @@ pid_type pid_execute(uint8 nr, pid_type readVal)
     return pTerm + iTerm - dTerm;
 }
 
+pid_type pid_get_target(uint8 nr)
+{
+    if (nr > PID_NR - 1) return -1;
+
+    return pid[nr].target;
+}
+
 int32 pid_reset(uint8 nr)
 {
     if (nr > PID_NR - 1) return -1;

@@ -37,6 +37,8 @@ void pid_init(void);
     These functions return a negative number if an error occured
 */
 pid_type pid_execute(uint8 nr, pid_type readVal);
+pid_type pid_get_target(uint8 nr);
+
 int32 pid_reset(uint8 nr);
 int32 pid_set_target(uint8 nr, pid_type target);
 int32 pid_set_gain(uint8 nr, pid_type pGain, pid_type iGain, pid_type dGain);

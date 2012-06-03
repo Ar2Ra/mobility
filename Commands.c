@@ -164,7 +164,7 @@ void advanced_cmd(uint8 id, uint8 *str)
         return;
     }
 
-    if (str[0] == 'p') //PID
+    if (str[0] == 'p') //PID debug
     {
         nr = str[1] - '0';
 
@@ -182,9 +182,8 @@ void advanced_cmd(uint8 id, uint8 *str)
             for (i = 3; str[i] != '\0'; i++)
                 target = (target * 10) + (str[i] - '0');
             
-            if (nr == 1) fprintf(stderr, "-10\n");
-            pid_set_target(nr, target * hall_get_res());
-            fprintf(f, "(PID) %d target %d\r\n", nr, target * hall_get_res());
+            pid_set_target(nr, target);
+            fprintf(f, "(PID) %d target %d\r\n", nr, target);
 
             return;
         }

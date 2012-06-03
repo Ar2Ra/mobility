@@ -42,7 +42,6 @@ void hall_timeout(void)
     
             if (motor_speed_now < motor_speed)             //If it's lower than the measured speed then update
             {
-                //fprintf(stdout, "%d: %d\r\n", motor_nr, motor_speed_now); 
                 if (motor_speed_now < (CRITICAL_SPEED * hall_get_res()))
                     motor_speed_now = 0;
 
@@ -111,6 +110,6 @@ void task_debug1(void)
 {
     if (bt_connected())
     {
-        fprintf(stderr, "%d\n", hall_get(2));
+        fprintf(stderr, "T%dF%d\n", pid_get_target(1), hall_get(2));
     }
 }
