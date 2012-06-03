@@ -18,6 +18,8 @@
 char *CompileTime = __TIME__;
 char *CompileDate = __DATE__;
 
+extern uint8 motor_debug;
+
 //Command circular buffer
 typedef struct _ccb_struct ccb_struct;
 
@@ -159,7 +161,30 @@ void advanced_cmd(uint8 id, uint8 *str)
         task_set_period(TASK_SCHEDULED_STOP, period);
         task_enable(TASK_SCHEDULED_STOP);
 
-        fprintf(f, "[ADV] Scheduled stop %d\r\n", period);
+        fprintf(f, "(ADV) Stop in %d\r\n", period);
+
+        return;
+    }
+
+    if (str[0] == 'w') //Set angular speed for both motors
+    {
+        target = 0;
+        for (i = 1; str[i] != '\0'; i++)
+            target = (target * 10) + (str[i] - '0');
+
+        pid_set_target(0, target);
+        pid_set_target(1, target);
+    }
+
+    if (str[0] == 'v')  //which motor data to collect [MATLAB]
+    {
+        nr = str[1] - '0';
+
+        if (nr == 1 || nr == 2)
+        {
+            motor_debug = nr;
+            fprintf(f, "(V) motor %d\r\n", nr);
+        }
 
         return;
     }

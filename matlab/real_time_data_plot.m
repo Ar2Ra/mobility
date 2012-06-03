@@ -5,8 +5,10 @@ fopen(serialObject);
 
 %% Set up the figure window
 time = 0;
-target = 0;
-voltage = 0;
+
+w1 = 0;
+target1 = 0;
+
 sample = 0;
 
 figureHandle = figure('NumberTitle','off',...
@@ -23,7 +25,7 @@ axesHandle = axes('Parent',figureHandle,...
 
 hold on;
 
-plotHandle = plot(axesHandle,time,voltage,time,target,'LineWidth',2);
+plotHandle = plot(axesHandle,time,w1,time,target1,'LineWidth',2);
 
 %xlim(axesHandle,[min(time) max(time+0.001)]);
 
@@ -36,7 +38,7 @@ ylabel('Motor speed','FontWeight','bold','FontSize',14,'Color',[0 0 1]);
 % Create title
 title('Motor real-time data capture','FontSize',15,'Color',[0 0 1]);
 
-% microcontroller - time between each values sent on RS232
+% microcontroller - time between each value sent on RS232
 sampleTime = 0.1;
 
 % interval pause for PC data collection
@@ -55,14 +57,14 @@ while 1
         break
     end
     
-    sample = fscanf(serialObject, 'T%dF%d\n');
+    sample = fscanf(serialObject, '%d-%d\n');
 
     time(count) = count * sampleTime;
-    target(count) = sample(1);
-    voltage(count) = sample(2);
     
-    set(plotHandle, 'YData', voltage, 'XData', time);
-    %plot(axesHandle,time,voltage,time,target,'LineWidth',2);
+    w1(count) = sample(1);
+    target1(count) = sample(2);
+    
+    set(plotHandle, {'YData'}, {w1;target1}, {'XData'}, {time;time});
 
     pause(pauseInterval);
     count = count + 1;

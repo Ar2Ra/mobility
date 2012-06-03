@@ -17,6 +17,7 @@
 #include "Pid.h"
 
 uint8 sample_channel = 0;
+uint8 motor_debug = 2;
 
 extern void led_bits(uint8 set, uint8 bit);
 
@@ -107,9 +108,15 @@ void robot_scheduled_stop(void)
 
 //Matlab?
 void task_debug1(void)
-{
+{   
+    uint32 hall_data;
+    uint32 target;
+
     if (bt_connected())
     {
-        fprintf(stderr, "T%dF%d\n", pid_get_target(1), hall_get(2));
+        hall_data = hall_get(motor_debug);
+        target = pid_get_target(motor_debug - 1);
+
+        fprintf(stderr, "%d-%d\n", hall_data, target);
     }
 }
