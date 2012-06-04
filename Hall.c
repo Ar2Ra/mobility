@@ -8,6 +8,8 @@
 #include "Type.h"
 
 #include "Hall.h"
+#include "Pid.h"
+#include "Gnc.h"
 
 uint32 hall_res;
 
@@ -136,7 +138,9 @@ void T1isr(void)	__irq
     
         signal_freq1 = compute_freq(value, last_capture1);
         last_capture1 = value;
-    
+
+        gnc_hall_pulse(0);                      //Increment Hall pulses (if needed)
+
         T1IR |= (1 << 4);                       //Clear capture 0 interrupt
     }
 
@@ -146,6 +150,8 @@ void T1isr(void)	__irq
 
         signal_freq2 = compute_freq(value, last_capture2);
         last_capture2 = value;
+
+        gnc_hall_pulse(1);                      //Increment Hall pulses (if needed)
 
         T1IR |= (1 << 5);                       //Clear capture 1 interrupt
     }

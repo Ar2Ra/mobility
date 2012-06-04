@@ -125,7 +125,7 @@ void simple_cmd(uint8 ch)
         break;
 
     case 'q':
-        robot_stop();       //duty cycle 0 both motors
+        gnc_full_stop();    //duty cycle 0 both motors and PID target 0
         break;
    
     case '1':
@@ -145,7 +145,7 @@ void simple_cmd(uint8 ch)
 void advanced_cmd(uint8 id, uint8 *str)
 {
     uint8 i, nr;
-    uint32 period, target;
+    uint32 period, target, pulses;
 
     pid_type pGain, iGain, dGain;
 
@@ -171,6 +171,19 @@ void advanced_cmd(uint8 id, uint8 *str)
             target = (target * 10) + (str[i] - '0');
 
         gnc_set_speed(target);
+
+        return;
+    }
+
+    if (str[0] == 'h') //Hall pulses
+    {
+        pulses = 0;
+        for (i = 1; str[i] != '\0'; i++)
+            pulses = (pulses * 10) + (str[i] - '0');
+
+        gnc_hall_set(pulses);
+
+        return;
     }
 
     if (str[0] == 'v')  //which motor data to collect [MATLAB]
@@ -389,7 +402,5 @@ void debug_cmd(uint8 id, uint8 *str)
 
         //If only "_b" command was issued, then print out connection status
         fprintf(f, "[BT] Connected: %d\r\n", bt_connected());
-
-        return;
     }
 }
