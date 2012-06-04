@@ -61,6 +61,7 @@ void PID_task(void)
 
     for (i = 0; i < PID_NR; i++)
     {
+        //readVal = hall_filter_get(i);
         readVal = hall_get(i + 1);
         plantCommand = pid_execute(i, readVal);
                
@@ -103,6 +104,9 @@ void check_battery(void)
 void robot_scheduled_stop(void)
 {
     robot_stop();
+    pid_set_target(0, 0);
+    pid_set_target(1, 0);
+
     task_disable(TASK_SCHEDULED_STOP);
 }
 

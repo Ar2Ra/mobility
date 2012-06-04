@@ -161,7 +161,7 @@ void advanced_cmd(uint8 id, uint8 *str)
         task_set_period(TASK_SCHEDULED_STOP, period);
         task_enable(TASK_SCHEDULED_STOP);
 
-        fprintf(f, "(ADV) Stop in %d\r\n", period);
+        //fprintf(f, "(ADV) Stop in %d\r\n", period);
 
         return;
     }

@@ -57,8 +57,8 @@ int main(void)
         Default state (values)
     */
     //=======================================
-    task_enable(0);     //Enable Startup Task
-    //bt_set_connected();
+    //task_enable(0);     //Enable Startup Task
+    bt_set_connected();
     
     task_enable(1);     //Enable Hall Timeout Task nr. 0
     task_enable(2);     //Enable PID
@@ -76,9 +76,11 @@ int main(void)
 
     /*
         PID Configuration
+        pid_set_gain(nr, pGain, iGain, dGain);
     */
-    pid_set_gain(0, 5, 1, 0);    
-    pid_set_gain(1, 5, 1, 0);
+
+    pid_set_gain(0, 24, 12, 0);    
+    pid_set_gain(1, 24, 12, 0);
     //=======================================
 
     while (1) 

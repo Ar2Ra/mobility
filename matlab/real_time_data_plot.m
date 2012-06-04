@@ -1,6 +1,6 @@
 %% Create the serial object
-serialPort = 'COM28';
-serialObject = serial(serialPort);
+serialPort = 'COM25';
+serialObject = serial(serialPort, 'BaudRate', 115200);
 fopen(serialObject);
 
 %% Set up the figure window
@@ -52,9 +52,18 @@ set(figureHandle,'Visible','on');
 hf=figure('position',[0 0 eps eps],'menubar','none');
 
 while 1
-    if strcmp(get(hf,'currentcharacter'),'q')
+    ch = get(hf,'currentcharacter');
+    
+    if strcmp(ch, 'q') %quit
         close(hf)
         break
+    end
+    
+    if strcmp(ch, 'c') %clear
+        time = 0;
+        w1 = 0;
+        target1 = 0;
+        count = 1;
     end
     
     sample = fscanf(serialObject, '%d-%d\n');
