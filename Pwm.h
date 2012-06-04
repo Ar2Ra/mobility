@@ -78,7 +78,7 @@ void robot_brake(void);                     //activate forced stop (brake)
 void robot_stop(void);                      //disengage motors
                                             //pwm set to 0%
 
-void robot_speed(uint8 percent);            //set speed
+void robot_pwm(uint8 percent);              //set overall pwm
 //==============================================================
 
 #endif  // __PWM_H

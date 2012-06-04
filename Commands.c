@@ -14,6 +14,7 @@
 #include "Adc.h"
 #include "Bluetooth.h"
 #include "Pid.h"
+#include "Gnc.h"
 
 char *CompileTime = __TIME__;
 char *CompileDate = __DATE__;
@@ -128,15 +129,15 @@ void simple_cmd(uint8 ch)
         break;
    
     case '1':
-        robot_speed(80);    //slow
+        robot_pwm(80);      //slow
         break;
     
     case '2':
-        robot_speed(90);    //medium
+        robot_pwm(90);      //medium
         break;
     
     case '3':
-        robot_speed(100);   //fast
+        robot_pwm(100);     //fast
         break;
     }
 }
@@ -158,10 +159,7 @@ void advanced_cmd(uint8 id, uint8 *str)
         for (i = 1; str[i] != '\0'; i++)
             period = (period * 10) + (str[i] - '0');
 
-        task_set_period(TASK_SCHEDULED_STOP, period);
-        task_enable(TASK_SCHEDULED_STOP);
-
-        //fprintf(f, "(ADV) Stop in %d\r\n", period);
+        gnc_scheduled_stop(period);
 
         return;
     }
@@ -172,8 +170,7 @@ void advanced_cmd(uint8 id, uint8 *str)
         for (i = 1; str[i] != '\0'; i++)
             target = (target * 10) + (str[i] - '0');
 
-        pid_set_target(0, target);
-        pid_set_target(1, target);
+        gnc_set_speed(target);
     }
 
     if (str[0] == 'v')  //which motor data to collect [MATLAB]

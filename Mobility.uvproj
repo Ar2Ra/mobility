@@ -461,6 +461,11 @@
               <FileType>1</FileType>
               <FilePath>.\Pid.c</FilePath>
             </File>
+            <File>
+              <FileName>Gnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Gnc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -994,6 +999,11 @@
               <FileType>1</FileType>
               <FilePath>.\Pid.c</FilePath>
             </File>
+            <File>
+              <FileName>Gnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Gnc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1487,6 +1497,11 @@
               <FileName>Pid.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Pid.c</FilePath>
+            </File>
+            <File>
+              <FileName>Gnc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Gnc.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -51,15 +51,15 @@ pid_type pid_execute(uint8 nr, pid_type readVal)
     
     if (pid[nr].iState > pid[nr].iMax)
         pid[nr].iState = pid[nr].iMax;
-    
+
     if (pid[nr].iState < pid[nr].iMin)
         pid[nr].iState = pid[nr].iMin;
 
     iTerm = pid[nr].iGain * pid[nr].iState;        //Calculate the integral term
-    
+
     dTerm = pid[nr].dGain *                        //Calculate the derivative term
         (readVal - pid[nr].dState);
-    
+
     pid[nr].dState = readVal;
 
     return pTerm + iTerm - dTerm;
@@ -78,7 +78,7 @@ int32 pid_reset(uint8 nr)
 
     pid[nr].iState = 0;
     pid[nr].dState = 0;
-    
+
     return 0;
 }
 

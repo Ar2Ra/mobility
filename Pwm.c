@@ -188,7 +188,7 @@ void robot_stop(void)               //disengage motors, duty cycle 0%
     pwm_set_percent(3, 0);
 }
 
-void robot_speed(uint8 percent)     //set speed
+void robot_pwm(uint8 percent)     //set speed
 {
     pwm_set_percent(3, percent);
 }

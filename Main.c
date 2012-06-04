@@ -62,9 +62,9 @@ int main(void)
     
     task_enable(1);     //Enable Hall Timeout Task nr. 0
     task_enable(2);     //Enable PID
-    //task_enable(3);     //Enable ADC conversion initiation Task nr. 1
-    //task_enable(4);     //Enable Bluetooth Broadcast Task nr. 2 [doesnt work without task 3]
-    //task_enable(5);     //Enable Check Battery Task nr. 3 [doesnt work without task 3]
+    //task_enable(3);     //Enable ADC conversion initiation Task nr. 3
+    //task_enable(4);     //Enable Bluetooth Broadcast Task nr. 4 [doesnt work without task 3]
+    //task_enable(5);     //Enable Check Battery Task nr. 5 [doesnt work without task 3]
                                                                                        
     //task_enable(7);     //Enable Debug Task 1
 
@@ -75,7 +75,7 @@ int main(void)
     //=======================================
 
     /*
-        PID Configuration
+        PID Tuning
         pid_set_gain(nr, pGain, iGain, dGain);
     */
 

@@ -15,6 +15,7 @@
 #include "Bluetooth.h"
 #include "Ssp.h"
 #include "Pid.h"
+#include "Gnc.h"
 
 uint8 sample_channel = 0;
 uint8 motor_debug = 2;
@@ -103,9 +104,7 @@ void check_battery(void)
 
 void robot_scheduled_stop(void)
 {
-    robot_stop();
-    pid_set_target(0, 0);
-    pid_set_target(1, 0);
+    gnc_full_stop();
 
     task_disable(TASK_SCHEDULED_STOP);
 }
