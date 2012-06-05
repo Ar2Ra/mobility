@@ -4,7 +4,7 @@ Led number:
 
     0 - Bluetooth is connected
     1 - Low battery voltage
-    2 -
+    2 - A special command is executing
     3 -
     4 -
     5 -

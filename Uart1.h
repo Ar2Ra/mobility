@@ -25,7 +25,7 @@
 //        <9=>   56000 Bauds
 //        <10=>  57600 Bauds
 //        <11=> 115200 Bauds
-#define UART1_BAUD_ID 11
+#define UART1_BAUD_ID 4
 #define UART1_BAUD_RATE \
   ((UART1_BAUD_ID ==  0) ?    600 : \
    (UART1_BAUD_ID ==  1) ?   1200 : \

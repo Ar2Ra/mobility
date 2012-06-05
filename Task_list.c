@@ -18,7 +18,7 @@
 #include "Gnc.h"
 
 uint8 sample_channel = 0;
-uint8 motor_debug = 2;
+uint8 motor_debug = 1;
 
 extern void led_bits(uint8 set, uint8 bit);
 
@@ -58,7 +58,7 @@ void PID_task(void)
     uint8 i;
     int32 readVal;
     
-    pid_type plantCommand;  
+    pid_type plantCommand;
 
     for (i = 0; i < PID_NR; i++)
     {
@@ -81,7 +81,7 @@ void energy_adc(void)
 
 void bt_broadcast(void)
 {
-    uint32 battery, motor1, motor2;  
+    uint32 battery, motor1, motor2;
 
     //Send only if bluetooth is connected
     if (bt_connected())
@@ -105,7 +105,7 @@ void check_battery(void)
 void robot_scheduled_stop(void)
 {
     gnc_full_stop();
-
+    gnc_signal_command(0);
     task_disable(TASK_SCHEDULED_STOP);
 }
 

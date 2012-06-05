@@ -8,7 +8,7 @@
 */
 /******************************************************************************/
 
-#include <LPC214x.H>                    /* LPC214x definitions                */
+#include <LPC214x.H>
 #include <stdio.h>
 #include "Type.h"
 
@@ -37,6 +37,9 @@ int main(void)
         Initialize peripherals
     */
     //=======================================
+    IO1DIR |= (1 << 28);  //Output for command execution signal
+    IO1CLR |= (1 << 28);
+
     dir_init();           //GPIO direction outputs for H-Bridge
 
     init_uart0();         //UART0 for debugging
@@ -57,8 +60,8 @@ int main(void)
         Default state (values)
     */
     //=======================================
-    //task_enable(0);     //Enable Startup Task
-    bt_set_connected();
+    task_enable(0);     //Enable Startup Task
+    //bt_set_connected();
     
     task_enable(1);     //Enable Hall Timeout Task nr. 0
     task_enable(2);     //Enable PID

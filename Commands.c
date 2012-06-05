@@ -129,15 +129,21 @@ void simple_cmd(uint8 ch)
         break;
    
     case '1':
-        robot_pwm(80);      //slow
+        //robot_pwm(80);      //slow
+        pwm_set_percent(1, 80);
+        pwm_set_percent(2, 68);
         break;
     
     case '2':
-        robot_pwm(90);      //medium
+        //robot_pwm(90);      //medium
+        pwm_set_percent(1, 90);
+        pwm_set_percent(2, 88);
         break;
     
     case '3':
-        robot_pwm(100);     //fast
+        //robot_pwm(100);     //fast
+        pwm_set_percent(1, 100);
+        pwm_set_percent(2, 97);
         break;
     }
 }
@@ -181,7 +187,7 @@ void advanced_cmd(uint8 id, uint8 *str)
         for (i = 1; str[i] != '\0'; i++)
             pulses = (pulses * 10) + (str[i] - '0');
 
-        gnc_hall_set(pulses);
+        gnc_hall_counter(pulses);
 
         return;
     }
@@ -258,20 +264,26 @@ void debug_cmd(uint8 id, uint8 *str)
       
     if (str[0] == 'p')  //PWM set duty cycle
     {
-       motor = str[1] - '0';
+        if (strlen((const char *) str) < 5)
+        {
+            fprintf(f, "[PWM] input err\r\n");
+            return;
+        }
+                
+        motor = str[1] - '0';
        
-       percent = 0;
-       for (i = 0; i < 3; i++)
-       {
-         percent = percent * 10 + str[i + 2] - '0';
-       }
+        percent = 0;
+        for (i = 0; i < 3; i++)
+        {
+          percent = percent * 10 + str[i + 2] - '0';
+        }
        
-       if (pwm_set_percent(motor, percent) < 0)
-           fprintf(f, "[PWM] input err\r\n");
-       else
-           fprintf(f, "[PWM] %d set %d\r\n", motor, percent);
+        if (pwm_set_percent(motor, percent) < 0)
+            fprintf(f, "[PWM] input err\r\n");
+        else
+            fprintf(f, "[PWM] %d set %d\r\n", motor, percent);
 
-       return;
+        return;
     }
     
     if (str[0] == 'f')  //Read frequency [capture signals]

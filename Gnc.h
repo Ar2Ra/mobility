@@ -8,6 +8,12 @@
 #define __GNC_H
 
 /*
+    Signals on LED2 and P1.28 if special commands (scheduled stop, hall counter)
+    are currently executing
+*/
+void gnc_signal_command(uint8 state);
+
+/*
     Robot full stop
 */
 void gnc_full_stop(void);
@@ -36,6 +42,11 @@ void gnc_hall_pulse(uint8 nr);
 /*
     How many Hall pulses to count for each motor until it will stop
 */
-void gnc_hall_set(uint32 pulses);
+void gnc_hall_counter(uint32 pulses);
+
+/*
+    Deactivate pulse counter
+*/
+void gnc_hall_reset(void);
 
 #endif  // __GNC_H
