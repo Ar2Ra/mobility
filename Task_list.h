@@ -56,8 +56,9 @@ void check_battery(void);
 void robot_scheduled_stop(void);
 
 /*
-    Task for debugging
+    Tasks for debugging
+    Matlab
 */
-void task_debug1(void);
+void task_debug1(void);  //motor speed
 
 #endif  // __TASK_LIST_H

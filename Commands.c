@@ -150,18 +150,19 @@ void simple_cmd(uint8 ch)
 
 void advanced_cmd(uint8 id, uint8 *str)
 {
+    uint8 flag_dual_op = 0;
     uint8 i, nr;
-    uint32 period, target, pulses;
+    uint32 period, target, pulses, op1, op2;
 
     pid_type pGain, iGain, dGain;
 
     FILE *f;
     f = (id == 0) ? stdout : stderr;
 
-    if (str[0] == 's') //Scheduled stop
+    if (str[0] == 's')  //Scheduled stop
     {
         period = 0;
-        
+
         for (i = 1; str[i] != '\0'; i++)
             period = (period * 10) + (str[i] - '0');
 
@@ -170,24 +171,73 @@ void advanced_cmd(uint8 id, uint8 *str)
         return;
     }
 
-    if (str[0] == 'w') //Set angular speed for both motors
+    if (str[0] == 'w')  //Set angular speed for both motors
     {
         target = 0;
         for (i = 1; str[i] != '\0'; i++)
-            target = (target * 10) + (str[i] - '0');
-
-        gnc_set_speed(target);
+        {                       
+            if (str[i] == '-')
+            {
+                op1 = target;
+                target = 0;
+                flag_dual_op = 1;
+            }
+            else
+                target = (target * 10) + (str[i] - '0');
+        }
+        
+        if (flag_dual_op)
+        {
+            op2 = target;
+            pid_set_target(0, op1);
+            pid_set_target(1, op2);
+            flag_dual_op = 0;
+        }
+        else
+            gnc_set_speed(target);
 
         return;
     }
 
-    if (str[0] == 'h') //Hall pulses
+    if (str[0] == 'h')  //Hall pulses
     {
         pulses = 0;
         for (i = 1; str[i] != '\0'; i++)
-            pulses = (pulses * 10) + (str[i] - '0');
+        {
+            if (str[i] == '-')
+            {
+                op1 = pulses;
+                pulses = 0;
+                flag_dual_op = 1;
+            }
+            else
+                pulses = (pulses * 10) + (str[i] - '0');
+        }
 
-        gnc_hall_counter(pulses);
+        if (flag_dual_op)
+        {
+            op2 = pulses;
+            gnc_hall_set(0, op1);
+            gnc_hall_set(1, op2);
+            flag_dual_op = 0;
+        }
+        else
+            gnc_hall_set_all(pulses);
+
+        return;
+    }
+
+    if (str[0] == 'd') //distance traveled
+    {
+        if (str[1] == 'r')
+        {
+            gnc_distance_reset();
+            fprintf(f, "(D) reset\r\n");
+            return;
+        }
+
+        nr = str[1] - '0';
+        fprintf(f, "(D) nr: %d dist: %d\r\n", nr, gnc_distance_get(nr));
 
         return;
     }
@@ -205,7 +255,7 @@ void advanced_cmd(uint8 id, uint8 *str)
         return;
     }
 
-    if (str[0] == 'p') //PID debug
+    if (str[0] == 'p')  //PID debug
     {
         nr = str[1] - '0';
 
@@ -217,7 +267,7 @@ void advanced_cmd(uint8 id, uint8 *str)
             return;
         }      
 
-        if (str[2] == 't') //target
+        if (str[2] == 't')  //target
         {
             target = 0;
             for (i = 3; str[i] != '\0'; i++)
@@ -229,7 +279,7 @@ void advanced_cmd(uint8 id, uint8 *str)
             return;
         }
 
-        if (str[2] == 'p') //gain
+        if (str[2] == 'p')  //gain
         {
             #if (PID_INT == 1)
             
@@ -245,9 +295,7 @@ void advanced_cmd(uint8 id, uint8 *str)
             
             #endif
             
-            pid_set_gain(nr, pGain, iGain, dGain);                       
-
-            return;
+            pid_set_gain(nr, pGain, iGain, dGain);
         }
     }
 }

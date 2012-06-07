@@ -18,7 +18,7 @@
 #include "Gnc.h"
 
 uint8 sample_channel = 0;
-uint8 motor_debug = 1;
+uint8 motor_debug = 2;
 
 extern void led_bits(uint8 set, uint8 bit);
 
@@ -114,7 +114,7 @@ void task_debug1(void)
 {   
     uint32 hall_data;
     uint32 target;
-
+    
     if (bt_connected())
     {
         hall_data = hall_get(motor_debug);

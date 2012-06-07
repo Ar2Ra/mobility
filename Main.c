@@ -60,8 +60,8 @@ int main(void)
         Default state (values)
     */
     //=======================================
-    task_enable(0);     //Enable Startup Task
-    //bt_set_connected();
+    //task_enable(0);     //Enable Startup Task
+    bt_set_connected();
     
     task_enable(1);     //Enable Hall Timeout Task nr. 0
     task_enable(2);     //Enable PID
@@ -82,11 +82,11 @@ int main(void)
         pid_set_gain(nr, pGain, iGain, dGain);
     */
 
-    pid_set_gain(0, 24, 12, 0);    
-    pid_set_gain(1, 24, 12, 0);
+    pid_set_gain(0, 8, 4, 0);    
+    pid_set_gain(1, 8, 4, 0);
     //=======================================
 
-    while (1) 
+    while (1)
     {
         if (commands_pending(0))
         {
@@ -98,7 +98,6 @@ int main(void)
             exec_cmd(1);
         }
     }
-    
 }
 
 //simple delay function [for testing only]

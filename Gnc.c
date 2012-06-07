@@ -13,10 +13,13 @@
 #include "Pwm.h"
 #include "Task_mech.h"
 #include "Task_list.h"
+#include "Hall.h"
 
-uint32 pulse[2];
-uint32 pulse_active[2];
-uint32 pulses_needed = 0;
+uint32 pulse[HALL_NR_SENSORS];
+uint32 pulse_active[HALL_NR_SENSORS];
+uint32 pulse_needed[HALL_NR_SENSORS];
+
+uint32 distance[HALL_NR_SENSORS];
 
 extern void led_bits(uint8 set, uint8 bit);
 
@@ -25,13 +28,13 @@ void gnc_signal_command(uint8 state)
     if (state)
     {
         led_bits(1, 2); //set led2
-        IO1SET |= (1 << 28);
+        IO1SET |= (1 << 28); //set P1.28
 
         return;
     }
 
-    led_bits(0, 2); //set led2
-    IO1CLR |= (1 << 28);
+    led_bits(0, 2); //clear led2
+    IO1CLR |= (1 << 28); //clear P1.28
 }
 
 void gnc_full_stop(void)
@@ -63,16 +66,15 @@ void gnc_set_speed(pid_type target)
 
 void gnc_hall_pulse(uint8 nr)
 {
+    distance[nr]++;
     if (!pulse_active[nr]) return;
 
-    if (pulse[nr] < pulses_needed)
+    if (pulse[nr] < pulse_needed[nr])
     {
         pulse[nr]++;
     }
     else
     {
-        //fprintf(stdout, "%d %d\r\n", pulse_active[nr], pulse[nr]);
-
         pulse_active[nr] = 0;
         gnc_motor_stop(nr);
         if (pulse_active[0] == 0 && pulse_active[1] == 0)
@@ -80,17 +82,19 @@ void gnc_hall_pulse(uint8 nr)
     }
 }
 
-void gnc_hall_counter(uint32 pulses)
+void gnc_hall_set(uint8 nr, uint32 pulses)
 {
     gnc_signal_command(1);
 
-    pulse[0] = 0;
-    pulse[1] = 0;
+    pulse[nr] = 0;
+    pulse_active[nr] = 1;
+    pulse_needed[nr] = pulses;
+}
 
-    pulse_active[0] = 1;
-    pulse_active[1] = 1;
-
-    pulses_needed = pulses;
+void gnc_hall_set_all(uint32 pulses)
+{
+    gnc_hall_set(0, pulses);
+    gnc_hall_set(1, pulses);
 }
 
 void gnc_hall_reset(void)
@@ -99,4 +103,16 @@ void gnc_hall_reset(void)
 
     pulse_active[0] = 0;
     pulse_active[1] = 0;
+}
+
+void gnc_distance_reset(void)
+{
+    distance[0] = 0;
+    distance[1] = 0;
+}
+
+uint32 gnc_distance_get(uint8 nr)
+{
+    if (nr > HALL_NR_SENSORS - 1) return 0;
+    return distance[nr];
 }
