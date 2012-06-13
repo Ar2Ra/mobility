@@ -130,8 +130,8 @@ void simple_cmd(uint8 ch)
    
     case '1':
         //robot_pwm(80);      //slow
-        pwm_set_percent(1, 80);
-        pwm_set_percent(2, 68);
+        pwm_set_percent(1, 82);
+        pwm_set_percent(2, 70);
         break;
     
     case '2':
@@ -317,15 +317,15 @@ void debug_cmd(uint8 id, uint8 *str)
             fprintf(f, "[PWM] input err\r\n");
             return;
         }
-                
+
         motor = str[1] - '0';
-       
+
         percent = 0;
         for (i = 0; i < 3; i++)
         {
           percent = percent * 10 + str[i + 2] - '0';
         }
-       
+
         if (pwm_set_percent(motor, percent) < 0)
             fprintf(f, "[PWM] input err\r\n");
         else
@@ -333,7 +333,7 @@ void debug_cmd(uint8 id, uint8 *str)
 
         return;
     }
-    
+
     if (str[0] == 'f')  //Read frequency [capture signals]
     {
         if (str[1] == 'r') //resolution
@@ -461,6 +461,6 @@ void debug_cmd(uint8 id, uint8 *str)
         }
 
         //If only "_b" command was issued, then print out connection status
-        fprintf(f, "[BT] Connected: %d\r\n", bt_connected());
+        fprintf(f, "%d\r\n", bt_connected());
     }
 }

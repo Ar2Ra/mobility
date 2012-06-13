@@ -32,7 +32,7 @@ task_struct task[NR_TASKS] =
     {40, hall_timeout, 0, 0},
     {60, PID_task, 0, 0},
 
-    {100, energy_adc, 0, 0},
+    {150, energy_adc, 0, 0},
     {1000, bt_broadcast, 0, 0},
     {5000, check_battery, 0, 0},
     

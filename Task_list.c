@@ -22,6 +22,9 @@ uint8 motor_debug = 2;
 
 extern void led_bits(uint8 set, uint8 bit);
 
+extern uint8 hall_state1;
+extern uint8 hall_state2;
+
 void startup_task(void)
 {
     bt_server();                                           //Make Bluetooth device discoverable
@@ -120,6 +123,6 @@ void task_debug1(void)
         hall_data = hall_get(motor_debug);
         target = pid_get_target(motor_debug - 1);
 
-        fprintf(stderr, "%d-%d\n", hall_data, target);
+        fprintf(stderr, "%d-%d\n",  hall_data, target);
     }
 }

@@ -60,14 +60,14 @@ int main(void)
         Default state (values)
     */
     //=======================================
-    //task_enable(0);     //Enable Startup Task
-    bt_set_connected();
+    task_enable(0);     //Enable Startup Task
+    //bt_set_connected();
     
     task_enable(1);     //Enable Hall Timeout Task nr. 0
     task_enable(2);     //Enable PID
-    //task_enable(3);     //Enable ADC conversion initiation Task nr. 3
+    task_enable(3);     //Enable ADC conversion initiation Task nr. 3
     //task_enable(4);     //Enable Bluetooth Broadcast Task nr. 4 [doesnt work without task 3]
-    //task_enable(5);     //Enable Check Battery Task nr. 5 [doesnt work without task 3]
+    task_enable(5);     //Enable Check Battery Task nr. 5 [doesnt work without task 3]
                                                                                        
     //task_enable(7);     //Enable Debug Task 1
 
@@ -82,8 +82,8 @@ int main(void)
         pid_set_gain(nr, pGain, iGain, dGain);
     */
 
-    pid_set_gain(0, 8, 4, 0);    
-    pid_set_gain(1, 8, 4, 0);
+    pid_set_gain(0, 14, 10, 0);    
+    pid_set_gain(1, 14, 10, 0);
     //=======================================
 
     while (1)

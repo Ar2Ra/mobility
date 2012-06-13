@@ -84,6 +84,7 @@ void gnc_hall_pulse(uint8 nr)
 
 void gnc_hall_set(uint8 nr, uint32 pulses)
 {
+    if (pulses == 0) return;
     gnc_signal_command(1);
 
     pulse[nr] = 0;

@@ -16,6 +16,9 @@ uint32 hall_res;
 uint32 last_capture1 = 0, signal_freq1 = 0;
 uint32 last_capture2 = 0, signal_freq2 = 0;
 
+uint8 hall_state1 = 0;
+uint8 hall_state2 = 0;
+
 void T1isr(void)    __irq;
 
 typedef struct _hall_struct hall_struct;
@@ -134,6 +137,7 @@ void T1isr(void)	__irq
 
     if (T1IR & (1 << 4))                        //Capture channel 0
     {
+        hall_state1 ^= 1;
         value = T1CR0;       
     
         signal_freq1 = compute_freq(value, last_capture1);
@@ -146,6 +150,7 @@ void T1isr(void)	__irq
 
     if (T1IR & (1 << 5))                        //Capture channel 1
     {
+        hall_state2 ^= 1;
         value = T1CR1;
 
         signal_freq2 = compute_freq(value, last_capture2);

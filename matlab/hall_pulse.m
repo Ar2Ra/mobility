@@ -5,33 +5,19 @@ fopen(serialObject);
 
 %% Set up the figure window
 time = 0;
-
-w1 = 0;
-target1 = 0;
-
+voltage = 0;
 sample = 0;
 
-%figureHandle = figure('NumberTitle','off',...
-%    'Name','Viteza unghiulara a motorului',...
-%    'Color',[0 0 0],'Visible','off');
-
 figureHandle = figure('NumberTitle','off',...
-    'Name','Viteza unghiulara a motorului',...
+    'Name','Tensiunea bateriei',...
     'Visible','off');
 
 % Set axes
-%axesHandle = axes('Parent',figureHandle,...
-%    'YGrid','on',...
-%    'YColor',[0.9725 0.9725 0.9725],...
-%    'XGrid','on',...
-%    'XColor',[0.9725 0.9725 0.9725],...
-%    'Color',[0 0 0]);
-
 axesHandle = axes('Parent',figureHandle,'YGrid','on','XGrid','on');
 
 hold on;
 
-plotHandle = plot(axesHandle,time,w1,time,target1,'LineWidth',2);
+plotHandle = plot(axesHandle,time,voltage,'LineWidth',2);
 
 %xlim(axesHandle,[min(time) max(time+0.001)]);
 
@@ -39,16 +25,16 @@ plotHandle = plot(axesHandle,time,w1,time,target1,'LineWidth',2);
 xlabel('Timp [s]','FontWeight','bold','FontSize',14,'Color',[0 0 1]);
 
 % Create ylabel
-ylabel('Viteza unghiulara [rot/s]','FontWeight','bold','FontSize',14,'Color',[0 0 1]);
+ylabel('Tensiune [mV]','FontWeight','bold','FontSize',14,'Color',[0 0 1]);
 
 % Create title
-title('Viteza unghiulara a motorului','FontSize',15,'Color',[0 0 1]);
+title('Masurarea tensiunii la baterie','FontSize',15,'Color',[0 0 1]);
 
 % microcontroller - time between each value sent on RS232
-sampleTime = 0.1;
+sampleTime = 0.01;
 
 % interval pause for PC data collection
-pauseInterval = sampleTime / 2;
+pauseInterval = sampleTime;
 
 %% Collect data
 count = 1;
@@ -67,19 +53,16 @@ while 1
     
     if strcmp(ch, 'c') %clear
         time = 0;
-        w1 = 0;
-        target1 = 0;
+        voltage = 0;
         count = 1;
     end
     
-    sample = fscanf(serialObject, '%d-%d\n');
+    sample = fscanf(serialObject, '%d\n');
 
-    time(count) = count * sampleTime;
+    time(count) = count * sampleTime;   
+    voltage(count) = sample;
     
-    w1(count) = sample(1);
-    target1(count) = sample(2);
-    
-    set(plotHandle, {'YData'}, {w1;target1}, {'XData'}, {time;time});
+    set(plotHandle, 'YData', voltage, 'XData', time);
 
     pause(pauseInterval);
     count = count + 1;
