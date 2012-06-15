@@ -52,7 +52,7 @@ int main(void)
     task_init();          //Simple task mechanism [functions that execute at x miliseconds] [Timer0]
     led_init();           //8 LEDs onboard MCB2140 P1.16 - P1.23
     
-    hall_set_res(1);      //Hall resolution [Hz * res] Hz, dHz, cHz, mHz
+    hall_set_res(1);      //Hall resolution [Hz * res] Hz, 10^1 Hz, 10^2 Hz, 10^3 Hz
     pid_init();           //Initialize PID for both motors
     //=======================================
 
