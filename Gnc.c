@@ -35,6 +35,7 @@ void gnc_signal_command(uint8 state)
 
     led_bits(0, 2); //clear led2
     IO1CLR |= (1 << 28); //clear P1.28
+    fprintf(stdout, "Z");
 }
 
 void gnc_full_stop(void)

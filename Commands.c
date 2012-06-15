@@ -21,6 +21,12 @@ char *CompileDate = __DATE__;
 
 extern uint8 motor_debug;
 
+uint32 s_pulse1 = 80;
+uint32 s_target1 = 70;
+
+uint32 s_pulse2 = 85;
+uint32 s_target2 = 75;
+
 //Command circular buffer
 typedef struct _ccb_struct ccb_struct;
 
@@ -197,6 +203,36 @@ void advanced_cmd(uint8 id, uint8 *str)
             gnc_set_speed(target);
 
         return;
+    }
+
+    if (str[0] == 'l') //left
+    {
+        robot_left();
+
+        if (str[1] != '\0')
+        {
+            sscanf((const char *) str, "l%d-%d", &pulses, &target);
+            s_pulse1 = pulses;
+            s_target1 = target;
+        }
+        
+        gnc_hall_set_all(s_pulse1);
+        gnc_set_speed(s_target1);
+    }
+
+    if (str[0] == 'r') //right
+    {
+        robot_right();
+
+        if (str[1] != '\0')
+        {
+            sscanf((const char *) str, "r%d-%d", &pulses, &target);
+            s_pulse2 = pulses;
+            s_target2 = target;
+        }
+
+        gnc_hall_set_all(s_pulse2);
+        gnc_set_speed(s_target2);
     }
 
     if (str[0] == 'h')  //Hall pulses
@@ -461,6 +497,6 @@ void debug_cmd(uint8 id, uint8 *str)
         }
 
         //If only "_b" command was issued, then print out connection status
-        fprintf(f, "%d\r\n", bt_connected());
+        fprintf(f, "[BT] Con: %d\r\n", bt_connected());
     }
 }

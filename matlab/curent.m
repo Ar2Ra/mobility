@@ -1,6 +1,6 @@
 %% Create the serial object
-serialPort = 'COM25';
-serialObject = serial(serialPort, 'BaudRate', 115200);
+serialPort = 'COM41';
+serialObject = serial(serialPort, 'BaudRate', 9600);
 fopen(serialObject);
 
 %% Set up the figure window
@@ -34,7 +34,7 @@ ylabel('Curent [mA]','FontWeight','bold','FontSize',14,'Color',[0 0 1]);
 title('Masurarea curentului prin motoare','FontSize',15,'Color',[0 0 1]);
 
 % microcontroller - time between each value sent on RS232
-sampleTime = 0.2;
+sampleTime = 0.5;
 
 % interval pause for PC data collection
 pauseInterval = sampleTime / 2;
