@@ -564,7 +564,7 @@
       <GroupNumber>3</GroupNumber>
       <FileNumber>4</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <Focus>0</Focus>
       <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -615,10 +615,17 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
+<<<<<<< HEAD
       <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>37</TopLine>
       <CurrentLine>63</CurrentLine>
+=======
+      <ColumnNumber>39</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>42</TopLine>
+      <CurrentLine>77</CurrentLine>
+>>>>>>> c0610a8abfa68229529374f9c4724b033703a230
       <bDave2>0</bDave2>
       <PathWithFileName>.\Main.c</PathWithFileName>
       <FilenameWithoutPath>Main.c</FilenameWithoutPath>
@@ -748,10 +755,17 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
+<<<<<<< HEAD
       <ColumnNumber>7</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>7</TopLine>
       <CurrentLine>35</CurrentLine>
+=======
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>7</TopLine>
+      <CurrentLine>7</CurrentLine>
+>>>>>>> c0610a8abfa68229529374f9c4724b033703a230
       <bDave2>0</bDave2>
       <PathWithFileName>.\Task_mech.c</PathWithFileName>
       <FilenameWithoutPath>Task_mech.c</FilenameWithoutPath>
